@@ -7,6 +7,9 @@
 
 \usepackage{times}
 
+%\usepackage{setspace}
+%\doublespacing
+
 \usepackage{titlesec}% http://ctan.org/pkg/titlesec
 \titleformat{\section}%
   [hang]% <shape>
@@ -36,63 +39,36 @@ Chicago}}
 
 \maketitle
 
-My research focuses on improving the dependability of distributed and cloud
-systems in the aspect of reliability. Large-scale cloud computing systems have
-played a major role behind the Information Age, and humanity will soon be highly
-relying on cloud computing. Users demand for 24/7 dependability of cloud
-computing systems so the systems must be reliable. They must be accessible
-anytime and anywhere, and not lose or corrupt users data. Unfulfilled
-dependability is costly. Internet service companies collectively lose billions
-of dollars in revenue each year from service downtimes. Yet, there are complex
-challenges to reach an ideal dependability. Behind cloud computing is a
-collection of hundreds of complex systems written in millions of lines of code
-that are brittle and prone to failures.
+My research focuses on improving the dependability of cloud-scale distributed
+systems such as scale-out storage systems, distributed computing frameworks,
+synchronization services, and cluster management services. Users demand for
+24/7 dependability of cloud computing systems so the systems must be reliable.
+They must be accessible anytime and anywhere, and not lose or corrupt users
+data. Unfulfilled dependability is costly. Internet service companies
+collectively lose billions of dollars in revenue each year from service
+downtimes. Yet, there are complex challenges to reach an ideal dependability.
+Behind cloud computing is a collection of hundreds of complex systems written in
+millions of lines of code that are brittle and prone to failures.
 
 I find that one unsolved reliability problem in cloud systems is
-\textit{distributed concurrency bugs (DC bugs)}. DC bugs are caused by
-non-deterministic order of distributed events. An example of Distributed events
-can be message transmission, which network could non-deterministically re-order
-them, or even worse, drop some messages. I also consider machine crashes and
-reboots as distributed events, because machine fault is a norm in hardware
-infrastructure today. If we consider cloud systems execute multiple complicated
-distributed protocols in parallel (\eg, serving users' requests and operating
-some background tasks at the same time), possible interleavings of the
-distributed events are beyond developers' imagination and there could exist some
-interleavings that cannot be handled properly. The buggy distributed
-interleavings can cause catastrophic failures such as data loss, data
-inconsistencies and downtimes. 
+\textbf{\textit{distributed concurrency bugs (DC bugs)}}. DC bugs are caused by
+non-deterministic order of distributed events such as message arrivals, faults,
+and reboots. Cloud systems execute multiple complicated distributed protocols
+concurrently (\eg, serving users' requests, operating some background tasks at
+the same time, and combined with untimely hardware failues). The possible
+interleavings of the distributed events are beyond developers' imagination and
+some interleavings might not be handled properly. The buggy
+distributed interleavings can cause catastrophic failures such as data loss,
+data inconsistencies and downtimes. 
 
 Compared to the countless efforts in combating local concurrency bugs (LC bugs),
-bugs happen due to non-determinism of thread scheduling in multi-threaded
+which happen due to non-determinism of thread scheduling in multi-threaded
 software, DC bugs have not received the same amount of attention. I believe it
 is time for the dependability community to address this important problem in
-systematic and comprehensive manners. And in order to combat DC bugs, I will
-pursue three objectives in advancing cloud systems dependability as briefly
-shown below.
-
-\if 0
-I find that one unsolved reliability problem in cloud systems is distributed
-concurrency bugs (DC bugs). DC bugs are caused by non-deterministic order of
-distributed events such as message arrivals, machine crashes, and reboots. Buggy
-distributed interleavings can cause catastrophic failures such as data loss,
-data inconsistencies and downtimes. Compared to the countless efforts in
-combating local concurrency bugs (LC bugs), bugs in multi-threaded software, DC
-bugs have not received the same amount of attention. I believe it is time for
-the dependability community to address this important problem in systematic and
-comprehensive manners. And in order to combat DC bugs, I will pursue three
+systematic and comprehensive manners. To combat DC bugs, I will pursue three
 objectives in advancing cloud systems dependability as briefly shown below.
-\fi
 
 \begin{enumerate}
-
-\if 0
-\item \textbf{Bug study}: Before start a battle, we have to thoroughly know our
-enemy, so we can know how to win. Thus in the first step, I start with an
-in-depth study of DC bugs and attempt to answer important questions such as
-\textit{``What types of DC bugs exist in real world?''} or \textit{``What are
-the root causes of DC bugs''}. This study will be an important foundation of
-future DC-bug researches in cloud systems community.
-\fi
 
 \item \textbf{Bug study}: Before start a battle, we have to thoroughly know our
 enemy, so we can plan how to win. Thus in the first step, I started with an
