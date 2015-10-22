@@ -29,7 +29,7 @@
 
 \begin{document}
 
-\title{Research Statement}
+\title{Research Summary}
 \author{Tanakorn Leesatapornwongsa}
 \date{\vspace{-1ex} \small{Department of Computer Science, University of
 Chicago}}
@@ -37,220 +37,78 @@ Chicago}}
 \maketitle
 
 My research focuses on improving the dependability of distributed and cloud
-systems in the aspect of reliability. Large-scale cloud computing systems have
-played a major role behind the Information Age, and humanity will soon be highly
-relying on cloud computing. Users demand for 24/7 dependability of cloud
-computing systems so the systems must be reliable. They must be accessible
-anytime and anywhere, and not lose or corrupt users data. Unfulfilled
-dependability is costly. Internet service companies collectively lose billions
-of dollars in revenue each year from service downtimes. Yet, there are complex
-challenges to reach an ideal dependability. Behind cloud computing is a
-collection of hundreds of complex systems written in millions of lines of code
-that are brittle and prone to failures.
-
-I find that one unsolved reliability problem in cloud systems is
-\textit{distributed concurrency bugs (DC bugs)}. DC bugs are caused by
-non-deterministic order of distributed events. An example of Distributed events
-can be message transmission, which network could non-deterministically re-order
-them, or even worse, drop some messages. I also consider machine crashes and
-reboots as distributed events, because machine fault is a norm in hardware
-infrastructure today. If we consider cloud systems execute multiple complicated
-distributed protocols in parallel (\eg, serving users' requests and operating
-some background tasks at the same time), possible interleavings of the
-distributed events are beyond developers' imagination and there could exist some
-interleavings that cannot be handled properly. The buggy distributed
-interleavings can cause catastrophic failures such as data loss, data
-inconsistencies and downtimes. 
-
-Compared to the countless efforts in combating local concurrency bugs (LC bugs),
-bugs happen due to non-determinism of thread scheduling in multi-threaded
-software, DC bugs have not received the same amount of attention. I believe it
-is time for the dependability community to address this important problem in
-systematic and comprehensive manners. And in order to combat DC bugs, I will
-pursue three objectives in advancing cloud systems dependability as briefly
-shown below.
-
-\if 0
-I find that one unsolved reliability problem in cloud systems is distributed
-concurrency bugs (DC bugs). DC bugs are caused by non-deterministic order of
-distributed events such as message arrivals, machine crashes, and reboots. Buggy
-distributed interleavings can cause catastrophic failures such as data loss,
-data inconsistencies and downtimes. Compared to the countless efforts in
-combating local concurrency bugs (LC bugs), bugs in multi-threaded software, DC
-bugs have not received the same amount of attention. I believe it is time for
-the dependability community to address this important problem in systematic and
-comprehensive manners. And in order to combat DC bugs, I will pursue three
-objectives in advancing cloud systems dependability as briefly shown below.
-\fi
-
-\begin{enumerate}
-
-\if 0
-\item \textbf{Bug study}: Before start a battle, we have to thoroughly know our
-enemy, so we can know how to win. Thus in the first step, I start with an
-in-depth study of DC bugs and attempt to answer important questions such as
-\textit{``What types of DC bugs exist in real world?''} or \textit{``What are
-the root causes of DC bugs''}. This study will be an important foundation of
-future DC-bug researches in cloud systems community.
-\fi
-
-\item \textbf{Bug study}: Before start a battle, we have to thoroughly know our
-enemy, so we can plan how to win. Thus in the first step, I started with an
-in-depth study of DC bugs to answer important questions that helps guide the
-subsequent my research projects and will be an important foundation of future
-DC-bug research in cloud systems community.
-
-\item \textbf{Offline testing}: My priority to combat DC bugs is in existing
-systems. To focus on these systems, the effective approach is to help
-developers unearth DC bugs in these systems. I have built model checking
-framework to do offline testing to detect hidden DC bugs. With this framework,
-developers will find DC bugs that could lead to severe failures in systems and
-fix them before deployment.
-
-\item \textbf{Runtime supports}: Although offline testing can point out most DC
-bugs to fix, but it cannot eliminate all, and patches could take weeks to months
-to apply into production systems. Thus we still need online/runtime approaches
-to complement. I propose three runtime supports that are runtime debugging,
-prevention, and recovery. With these supports, we can relieve failures due to DC
-bugs in production systems.
-
-\if 0
-\item \textbf{DC-bug-free design}: For systems we will develop in the future, I
-will advance system designs to allow more concurrency with DC-bug-free
-guarantees verified by offline testing and online supports above. And for
-hard-to-verify protocols, I will re-design the system with less concurrency.
-\fi
-
-\end{enumerate}
-
+systems in the aspect of reliability. The unsolved reliability problem in cloud
+systems that I am tackling is \textit{distributed concurrency bugs (DC bugs)}.
+Similar to local concurrency bugs (LC bugs), which are bugs caused by
+non-deterministic computing order of threads, DC bugs are caused by
+non-deterministic order of distributed events. Non-deterministic distributed
+events could be message processing (network could re-order messages), or
+machine crashes (hardware fault can happen randomly), \etc\ Possible
+interleavings of distributed events are beyond developers' imagination and
+some are not handled properly which could cause catastrophic failures such as
+data loss, data inconsistencies, and downtimes. In order to combat DC bugs,
+I will pursue three objectives in advancing system dependability including
+\textit{DC-bug study}, \textit{offline testing}, and \textit{runtime supports}.
 The following sections describe in detail my research work grouped by status.
 
 \section*{Current Work}
 
-\subsection{Bug Study}
+\subsection{DC-Bug Study}
 
-Many dependability researchers recently employ a \textit{formal bug study}
-approach where they analyze hundreds of reported bugs to identify opportunities
-for new research, build taxonomies of new problems, test new tools, and for
-other purposes. Thus, I start my research here by doing formal buy study.
+To combat DC bugs, I started my research by formally studying them to
+comprehend their characteristics and identify opportunities to build new DC-bug
+detection tools. Our group and I have created the largest and most
+comprehensive taxonomy of 104 real-world DC bugs named TaxDC from Cassandra,
+HBase, Hadoop MapReduce/Yarn, and ZooKeeper. TaxDC contains in-depth
+characteristics of DC bugs, stored in the form of 2083 classification labels
+and 4528 lines of re-enumerated steps to the bugs that we manually added. 
 
-\subsubsection*{Initial work: Cloud Bug Study}
-
-Our research group and I have performed the largest bugs study in six important
-Apache cloud infrastructures including Cassandra, Flume, Hadoop MapReduce,
-HBase, HDFS, and ZooKeeper (\textit{SoCC '14}). We reviewed in total 21,399
-submitted issues within a three-year period (2011-2014) in Apache bug
-reposistories. Among these issues, we perform a deep analysis of 3655 ``vital''
-issues (\ie, real issues affecting deployments) with a set of detailed
-classifications. This work led our group to several interesting dependability
-research questions, however, it did not dissect DB bugs. 
-
-\subsubsection*{Ongoing work: DC Bug Taxonoy} 
-
-While there were many LC-bug study, I am not aware of any large-scale study of
-DC bugs. A recent paper from Tsinghua University and Microsoft Research only
-studied five DC bugs in MapReduce systems. Thus to fill the void, our group and
-I have created the largest and most comprehensive taxonomy of 104 real-world DC
-bugs (named TaxDC) from Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper.
-TaxDC contains in-depth characteristics of DC bugs, stored in the form of 2083
-classification labels and 4528 lines of re-enumerated steps to the bugs that we
-manually added. Motivated by the availability of bug benchmarks for LC bugs, we
-will release TaxDC as a large-scale DC bugs benchmark.
-
-With TaxDC, I can answer important questions such as: How often DC bugs are
-reported from real deployments? What types of DC bugs exist in real world?  What
-are the root causes of DC bugs (out-of-order messages, failures, \etc)? Can
-existing LC-bug-detection tools applicable for DC bugs? How do developers fix DC
-bugs (by adding locks, states, \etc)? What are the inputs/triggering conditions?
-What are the minimum number of distributed events needed to trigger the bugs
-(how many messages to re-order, failures to inject, \etc)? What errors/effects
-(specification violations) are caused by DC bugs? (NPE, deadlock, data loss,
-state inconsistency, performance problems, \etc)? How do propagation chains form
-from the root causes to errors? The answers to these questions will guide the
-subsequent my research projects.
+With TaxDC, I can answer important questions such as: What types of DC bugs
+exist in real world? What are the root causes of DC bugs (out-of-order
+messages, hardware failures, \etc)? Can existing LC-bug-detection tools
+applicable for DC bugs? How do developers fix DC bugs (by adding locks, states,
+\etc)? How do propagation chains form from the root causes to errors? The
+answers for these questions guide the subsequent my research projects.
 
 \subsection{Offline Testing}
 
-After I have understood the characteristics of DC bugs, I started unearth hidden
-bugs in current cloud infrastructures by using offline testing. One powerful
-method for discovering hidden DC bugs is the use of an implementation-level
-distributed system model checker (dmck). By re-ordering non-deterministic
-distributed events, a dmck can discover buggy interleavings that lead to DC
-bugs.
-
-The last eight years have seen a rise of dmcks. One big challenge faced by a
-dmck is the state-space explosion problem (\ie, there are too many distributed
-events to re-order, and re-ordering every permutation cannot be done in
-reasonable time). To address this, existing dmcks adopt a random walk or basic
-reduction techniques such as dynamic partial order reduction (DPOR). Despite
-these early successes, existing approaches are still impractical to unearth many
-real-world DC bugs due to complex non-determinism that could happen (\eg, an
-additional crash during current crash recovery), so we advanced the state of the
-art of dmck to make it possible to test real-world cloud systems.
+After I have comprehended the characteristics of DC bugs, I started tackle DC
+bugs by offline testing approach. One powerful method for discovering hidden DC
+bugs is the use of an implementation-level distributed system model checker
+(dmck). Dmcks discover buggy interleavings by try re-ordering all
+non-deterministic distributed events. However, one big problem of dmck is the
+state-space explosion (\ie, there are too many events to re-order). In order to
+mitigate this, existing dmcks adopt basic reduction techniques. Despite these
+early successes, existing approaches are still impractical to unearth real-world
+bugs due to complex non-determinism that could happen (\eg, an additional crash
+during current crash recovery), so my research is advancing the state of the art
+of dmck to make it possible to test real-world cloud systems.
 
 \subsubsection*{Initial work: Semantic-Aware Model Checking} 
 
-To start with, I specifically addressed two limitations of existing dmcks.
-First, existing dmcks treat every target system as a complete black box, and
-therefore perform unnecessary reorderings of distributed events that would lead
-to the same explored states (\ie, redundant executions). Second, they do not
-incorporate complex multiple fault events (\eg, crashes, reboots) into their
-exploration strategies, as such inclusion would exacerbate the state-space
-explosion problem.
-
-To address these limitations, I built Semantic-Aware Model Checker (SAMC)
+To start with, I specifically addressed a limitation of existing dmcks which is
+they treat every target system as a black box, and therefore perform unnecessary
+reorderings of distributed events that would lead to the same explored states
+(\ie, redundant executions). Thus, I built Semantic-Aware Model Checker (SAMC)
 (\textit{OSDI '14, ISSTA '15}), a white-box model checker that takes semantic
-knowledge of how distributed events (specifically, messages, crashes, and
-reboots) are processed by the target system and incorporates that information in
-reduction policies. The policies are based on sound reduction techniques such as
-DPOR and symmetry. The policies tell SAMC not to re-order some pairs of events
-such as message-message pairs or crash-message pairs, yet preserves soundness,
-because those cut out re-orderings are redundant.
-
-With SAMC, I was able to unearth 12 old bugs in 3 cloud systems involving 30-120
-distributed events and multiple crashes and reboots. Some of these bugs cannot
-be unearthed by non-SAMC approaches, even after two days. SAMC can find the bugs
-271x (33x on average) compared to state-of-the-art techniques. And I was able to
-find a few new bugs in Hadoop MapReduce and ZooKeeper.
-
-\subsubsection*{Ongoing work: Full Check Model Checking} 
-
-Although SAMC can significantly mitigate state-space explosion, I still find two
-major gaps between SAMC and real-world DC bugs. First, SAMC reorders messages by
-default and injects crashes and reboots, but it does not control the timings of
-all types of events necessary to unearth DC bugs. For example, SAMC does not
-intercept local computation, does not exercise timeouts, and does not include
-other faults rather than crashes and reboots such as untimely disk faults.
-
-Second, controlling all necessary events is technically doable, but it will
-``blow up'' the exploration space. The use of semantic relationships between
-multiple events such as message-message and crash-message semantics in SAMC can
-remove redundant re-orderings. However, more innovations are needed to devise
-fast exploration strategies that leverage semantic relationships among all
-necessary events.
-
-To address the incompleteness of SAMC, my colleagues and I are building
-\fullcheck, a dmck that intercepts all types of necessary events to unearth
-real-world DC bugs, but will do so in a fast and scalable manner with the
-incorporation of semantic relationships between the events.
+knowledge of how distributed events are processed by the target system and
+incorporates that information to create reduction policies. The policies are
+based on sound reduction techniques and they tell a dmck not to re-order some
+pairs of events, because those re-orderings are redundant.
 
 \subsubsection*{Ongoing work: Automatically Generated Reduction Strategies} 
 
-As we leverage domain-specific semantic information into reduction strategies,
-this process is done by hand that means it requires developers manually extract
-and incorporate the semantic knowledge and write the corresponding reduction
-policies. This manual process is based on high-level human understanding of the
-codebase, which can potentially miss important patterns due to human errors, and
-breaks soundness, which then makes us skip buggy orderings.
+As we leverage domain-specific knowledge into reduction strategies, this process
+is done by hand that means it requires developers manually extract and
+incorporate the knowledge to write the corresponding reduction policies. This
+manual process is based on high-level human understanding of the codebase, which
+prone to human errors, and could breaks soundness.
 
-To address the unsoundness of SAMC and \fullcheck, and the developers' burden in
-manually writing semantic-based reduction strategies, my colleagues and I are
-evolving it into \autocheck, a dmck that automatically and soundly extracts
-complete semantic knowledge into reduction strategies with the help of program
-analysis.
-
-To do so, we combine symbolic execution and dmck. While others have used
-symbolic execution with model checking for LC bugs, \autocheck will be the first
+I address the unsoundness of SAMC and the developers' burden in writing
+semantic-based reduction policies by evolving SAMC into AutoSAMC, a dmck that
+automatically and soundly extracts complete semantic knowledge into reduction
+strategies. I combine symbolic execution with dmck. While others have used
+symbolic execution with model checking for LC bugs, AutoSAMC will be the first
 case for implementation-level dmck. 
 
 \section*{Future Work}
@@ -258,54 +116,40 @@ case for implementation-level dmck.
 \subsection{Runtime Support}
 
 While my current work is on an offline approach, my future plan includes runtime
-supports to combat DC bugs. I plan to build three runtime supports: (1) a
-runtime monitoring and statistical debugging support; (2) a runtime DC-bug
-prevention layer; and (3) a runtime checkpoint-rollback recovery mechanism.
+supports to combat DC bugs. I plan to build three runtime supports as shown
+below.
 
+\if 0
 \subsubsection*{Runtime DC-Bug Statistical Debugging}
 
 Statistical debugging has been used effectively for detecting performance
 anomalies in distributed systems and for comparing success- and failure-run
-traces to help identify LC-bug triggering conditions Such an approach can also
+traces to help identify LC-bug triggering conditions. Such an approach can also
 be powerful to unearth DC bugs uncaught in offline approaches and useful to
-developers who want to debug customer deployments. 
-
-Thus the first step of runtime supports, I will build a runtime monitoring and
-statistical debugging support to catch DC bugs in live deployments, specifically
-by pinpointing the triggering conditions.
+developers who want to debug customer deployments. Thus, I will start by
+building a runtime monitoring and statistical debugging support to catch DC bugs
+in live deployments, specifically by pinpointing the triggering conditions.
 
 \subsubsection*{Runtime DC-Bug Prevention}
 
-Applying patches to deployments can take weeks to months. Ideally, we want to
-alter the timings of triggering conditions to prevent DC-bug-induced failures
-before the patches are applied. Altering runtime behaviors has proven to be
-effective for LC bugs, unfortunately their detailed approaches are not directly
-applicable for DC bugs; LC-bug-prevention approaches target atomicity violations
-that are rare in distributed systems. Fortunately, our study shows that many DC
-bugs can be prevented by altering the timings of a few set of events or by
-retrying or discarding some messages, creating significant opportunities for
-automated DC bug prevention.
-
-I will develop a runtime prevention layer built around each node of the target
-system that manipulates event timing and processing to prevent DC-bug-induced
-failures to manifest. Developers can program the runtime prevention layer on the
-fly to apply simple fixes.
+Since generating patches to deployments can take time, we need to prevent
+DC-bug-induced failues when developers are working on the patches. Our study
+shows that many DC bugs can be prevented by altering the timings of a few set of
+events, or by retrying or discarding some messages. This creates significant
+opportunities for online DC bug prevention. My plan is to develop a runtime
+prevention layer built around each node of the target system that manipulates
+event timing and processing to prevent failures so developers can program the
+runtime prevention layer on the fly to apply simple fixes.
 
 \subsubsection*{Runtime DC-Bug Recovery}
 
-I envision that runtime prevention can prevent most DC bugs, but it has two
-limitations. First, as it depends on input specification, it cannot guarantee
-100\% bug coverage. Second, if DC-bug-induced failures happen at critical nodes
-(\eg, master node), fail-stopping the node is not an ideal solution. Thus, we
-want to transparently recover from DC bugs in production runs, minimizing
-user-visible failures. Similar approaches have been successfully used for LC
-bugs; when an LC-bug-induced failure is detected, the system can rollback to
-the last good checkpoint and re-run the computation hoping the
-non-deterministic buggy interleaving will not repeat.
-
-Thus I will apply the same idea of LC-bug recovery to build a runtime recovery
-mechanism that performs checkpoint and rollback to mask DC-bug-induced failures.
-
-%\subsection{DC-Bug-Free Design}
+Since runtime prevention depends on input specification, it cannot guarantee
+100\% bug coverage.  If failures happen at critical nodes (\eg, master node),
+users can face downtimes. Thus, we need to transparently recover from DC bugs in
+production runs, minimizing user-visible failures. Thus, I will build a runtime
+recovery mechanism that performs checkpoint and rollback to mask failures out
+from users' visibility.
+\fi
 
 \end{document}
+
