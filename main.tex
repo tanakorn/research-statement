@@ -55,10 +55,10 @@ I find that one unsolved dependability problem in cloud systems is
 non-deterministic order of distributed events such as message arrivals, faults,
 and reboots. Cloud systems execute multiple complicated distributed protocols
 concurrently (\eg, serving users' requests, operating some background tasks,
-and combined with untimely hardware failues). The possible interleavings of the
+and combined with untimely hardware failures). The possible interleavings of the
 distributed events are beyond developers' imagination and some interleavings
 might not be handled properly. The buggy interleavings can cause catastrophic
-failures such as data loss, data inconsistencies and downtimes. 
+failures such as data loss, data inconsistencies, and downtimes. 
 
 %Compared to the countless efforts in combating local concurrency bugs (LC bugs),
 %which happen due to non-determinism of thread scheduling in multi-threaded
@@ -67,15 +67,15 @@ failures such as data loss, data inconsistencies and downtimes.
 %systematic and comprehensive manners. 
 
 To combat DC bugs, I establish my research to (1) do \textbf{\textit{formal bug
-study}} and (2) unearth DC bugs by \textbf{\textit{model checking}}. The
-following sections explain my research in detail and how it is applicable to
-Facebook.
+study}} and (2) use \textbf{\textit{model checking}} approach to unearth DC
+bugs. The following sections explain my research in detail and how applicable
+it is to Facebook.
 
 \section{Bug Study}
 
 Bug or failure studies can significantly guide many aspects of dependability
 research. Many dependability researchers recently employ formal studies on
-bugs/failures such as a large-scale study of flash memory failures from
+bugs and failures such as a large-scale study of flash memory failures from
 Facebook that can identify opportunities for new research. For distributed
 system bug, there were a few studies on them but the works did not dissect DC
 bugs, and I am not aware of any large-scale study of DC bugs. 
@@ -84,7 +84,7 @@ To fill the void, our group and I have created the largest and most
 comprehensive taxonomy of 104 real-world DC bugs (named \taxdc) from Cassandra,
 HBase, Hadoop MapReduce/Yarn, and ZooKeeper. \taxdc\ contains in-depth
 characteristics of DC bugs and re-enumerated steps to the bugs that we manually
-added. And it helps me answer important questions such as: What types of DC
+added. It helps us answer important questions such as: What types of DC
 bugs exist in real world? What are the root causes of DC bugs?  How do
 developers fix DC bugs? How do propagation chains form from the root causes to
 errors? The answers for these questions help guide the subsequent of my
@@ -164,7 +164,7 @@ strategies, we (or the developers) must manually extract and incorporate the
 semantic knowledge and write the corresponding reduction policies. This manual
 process is based on high-level human understanding of the codebase, which can
 potentially miss important re-orderings due to human errors, and breaks
-soundness, which could leave DC bugs unearthing.
+soundness, which therefore leave DC bugs unearthing.
 
 To address the unsoundness of SAMC, and the developers' burden in manually
 writing semantic-based reduction strategies, I am developing \autocheck, a dmck
