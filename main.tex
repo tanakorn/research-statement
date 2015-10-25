@@ -110,7 +110,7 @@ order reduction (DPOR). Despite these early successes, existing approaches are
 still impractical to unearth real-world bugs, so I am advancing the state of
 the art of dmck to combat DC bugs, which I describe below.
 
-\subsection{Semantic-Aware Model Checking} 
+\subsection{Semantic-Aware Model Checking (Initial Work)} 
 
 I started my work by specifically addressing two limitations of existing dmcks.
 First, existing dmcks treat target system as a complete black box, and perform
@@ -157,7 +157,7 @@ real-world DC bugs, but will do so in a fast and scalable manner with the
 incorporation of semantic relationships between the events.
 \fi
 
-\subsection{Automated Semantic-Aware Model Checking} 
+\subsection{Automated Semantic-Aware Model Checking (Ongoing Work)} 
 
 So far, as we leverage domain-specific semantic information into reduction
 strategies, we (or the developers) must manually extract and incorporate the
@@ -169,11 +169,11 @@ soundness, which could leave DC bugs unearthing.
 To address the unsoundness of SAMC, and the developers' burden in manually
 writing semantic-based reduction strategies, I am developing \autocheck, a dmck
 that automatically and soundly extracts semantic knowledge into reduction
-strategies with the help of program analysis. I am combining symbolic execution
+strategies with the help of static analysis. I am combining symbolic execution
 and dmck. \autocheck\ will be the first case for implementation-level dmck that
 adopts symbolic execution. 
 
-\subsection{Deep Distributed System Model Checking}
+\subsection{Deep Distributed System Model Checking (Future Work)}
 
 Execution paths to DC bugs often requires complex input preconditions such as
 multiple faults, reboots, and protocol initiations. From my study, more than
@@ -195,9 +195,9 @@ more complex scenarios.
 
 One factor behind the success of Facebook is its robust large-scale data
 centers. Facebook has developed a number of cloud-scale systems such as
-Cassandra, the popular open-source scalable database, Haystack and f4,
-optimized object storages for photo sharing, and Unicorn, social-graph indexing
-system. The whole systems were written in gigantic size of codebase and if not
+Cassandra, the popular open-source scalable database, Haystack and f4, optimized
+object storages for photo sharing, and Unicorn, social-graph indexing system.
+Facebook's systems were written in gigantic size of codebase and if not
 thoroughly tested, there could be corner-case bugs hiding there.
 
 Facebook has developed tools to detect bugs such as Facebook Infer, static
