@@ -214,4 +214,21 @@ case for implementation-level dmck.
 
 \subsection{Deep Semantic-Aware Model Checking (Future Work)}
 
+Execution paths to DC bugs often requires complex input preconditions such as
+multiple faults, reboots, and protocol initiations. I found that more than 60\%
+of DC bugs require more than one protocol initiations, 35\% require multiple
+faults, and 29\% of DC bugs arise within buggy interactions between foreground
+and background protocols.  This again highlights the complexity of fully
+complete systems. If we do not include the complex preconditions, the bugs will
+not surface.
+
+To address this complexity, I will construct \deepcheck, a dmck with a backward
+static analysis tool that is capable of searching the necessary input
+preconditions to cover unreachable paths. The concept of \deepcheck\ is the dmck
+will run with a limited input precondition. Then, \deepcheck\ will analyze which
+code path is not reachable given the limited input. It will perform a backward
+analysis to search for input preconditions to the path. As a result, this
+backward analysis will provide the sequence of input preconditions that cover
+more complex scenarios.
+
 \end{document}
