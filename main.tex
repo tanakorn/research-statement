@@ -61,41 +61,25 @@ some interleavings might not be handled properly. The buggy
 distributed interleavings can cause catastrophic failures such as data loss,
 data inconsistencies and downtimes. 
 
-Compared to the countless efforts in combating local concurrency bugs (LC bugs),
-which happen due to non-determinism of thread scheduling in multi-threaded
-software, DC bugs have not received the same amount of attention. I believe it
-is time for the dependability community to address this important problem in
-systematic and comprehensive manners. To combat DC bugs, I will pursue three
-objectives in advancing cloud systems dependability as briefly shown below.
+Compared to the countless efforts in combating \textbf{\textit{local
+concurrency bugs (LC bugs)}}, which happen due to non-determinism of thread
+scheduling in multi-threaded software, DC bugs have not received the same
+amount of attention. I believe it is time for the dependability community to
+address this important problem in systematic and comprehensive manners. To
+combat DC bugs, I pursue two objectives in advancing cloud systems dependability
+as briefly shown below.
 
 \begin{enumerate}
 
-\item \textbf{Bug study}: Before start a battle, we have to thoroughly know our
-enemy, so we can plan how to win. Thus in the first step, I started with an
-in-depth study of DC bugs to answer important questions that helps guide the
-subsequent my research projects and will be an important foundation of future
-DC-bug research in cloud systems community.
+\item \textbf{Formal bug study}: For the first step, I started with an in-depth
+study of DC bugs to answer important questions that helps guide the subsequent
+my research projects and will be an important foundation of future DC-bug
+research in cloud systems community.
 
-\item \textbf{Offline testing}: My priority to combat DC bugs is in existing
-systems. To focus on these systems, the effective approach is to help
-developers unearth DC bugs in these systems. I have built model checking
-framework to do offline testing to detect hidden DC bugs. With this framework,
-developers will find DC bugs that could lead to severe failures in systems and
-fix them before deployment.
-
-\item \textbf{Runtime supports}: Although offline testing can point out most DC
-bugs to fix, but it cannot eliminate all, and patches could take weeks to months
-to apply into production systems. Thus we still need online/runtime approaches
-to complement. I propose three runtime supports that are runtime debugging,
-prevention, and recovery. With these supports, we can relieve failures due to DC
-bugs in production systems.
-
-\if 0
-\item \textbf{DC-bug-free design}: For systems we will develop in the future, I
-will advance system designs to allow more concurrency with DC-bug-free
-guarantees verified by offline testing and online supports above. And for
-hard-to-verify protocols, I will re-design the system with less concurrency.
-\fi
+\item \textbf{Distributed system model checking}: To combat DC bugs, my focus is
+on existing systems. The effective approach for these systems is to help
+developers unearth DC bugs. I have built model checking framework to detect
+hidden DC bugs. 
 
 \end{enumerate}
 
