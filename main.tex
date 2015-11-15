@@ -174,12 +174,12 @@ MapReduce and ZooKeeper.
 
 \subsection{Full Semantic-Aware Model Checking (Ongoing Work)} 
 
-Although SAMC can significantly mitigate state-space explosion, I still find two
-major gaps between SAMC and real-world DC bugs. First, SAMC reorders messages by
-default and injects crashes and reboots, but it does not control the timings of
-all types of events necessary to unearth DC bugs. For example, SAMC does not
-intercept local computation, does not exercise timeouts, and does not include
-other faults rather than crashes and reboots such as untimely disk faults.
+There are two major gaps between exisitng dmcks (including SAMC) and real-world
+DC bugs. First, dmcks reorder messages by default, but they do not control the
+timings of all types of events necessary to unearth DC bugs. For example, MaceMC
+and SAMC do not intercept local computation and do not exercise timeouts;
+\modist\ and Demeter do not inject multiple crash and reboot timings; and none
+of the above include other faults such as untimely disk faults.
 
 Second, controlling all necessary events is technically doable, but it will
 ``blow up'' the exploration space. The use of semantic relationships between
@@ -188,29 +188,30 @@ remove redundant re-orderings. However, more innovations are needed to devise
 fast exploration strategies that leverage semantic relationships among all
 necessary events.
 
-To address the incompleteness of SAMC, my colleagues and I are building
-\fullcheck, a dmck that intercepts all types of necessary events to unearth
-real-world DC bugs, but will do so in a fast and scalable manner with the
-incorporation of semantic relationships between the events.
+To address the incompleteness of SAMC, I am building \fullcheck, a dmck that
+intercepts all types of necessary events to unearth real-world DC bugs, but
+will do so in a fast and scalable manner with the incorporation of semantic
+relationships between the events.
+
+% I could talk about other reduction technique here, maybe Demeter, bounded
+% model checking from MSR, etc.
 
 \subsection{Automated Semantic-Aware Model Checking (Ongoing Work)} 
 
-As we leverage domain-specific semantic information into reduction strategies,
-this process is done by hand that means it requires developers manually extract
-and incorporate the semantic knowledge and write the corresponding reduction
-policies. This manual process is based on high-level human understanding of the
-codebase, which can potentially miss important patterns due to human errors, and
-breaks soundness, which then makes us skip buggy orderings.
+So far, as we leverage domain-specific semantic information into reduction
+strategies, we (or the developers) must manually extract and incorporate the
+semantic knowledge and write the corresponding reduction policies. This manual
+process is based on high-level human understanding of the codebase, which can
+potentially miss important patterns due to human errors, and breaks soundness.
 
-To address the unsoundness of SAMC and \fullcheck, and the developers' burden in
-manually writing semantic-based reduction strategies, my colleagues and I are
-evolving it into \autocheck, a dmck that automatically and soundly extracts
-complete semantic knowledge into reduction strategies with the help of program
-analysis.
-
-To do so, we combine symbolic execution and dmck. While others have used
-symbolic execution with model checking for LC bugs, \autocheck will be the first
-case for implementation-level dmck. 
+To address the unsoundness of SAMC, and the developers' burden in manually
+writing semantic-based reduction strategies, I am evolving it into \autocheck,
+a dmck that automatically and soundly extracts complete semantic knowledge into
+reduction strategies with the help of program analysis.
+%
+To do so, I combine symbolic execution and dmck. While others have used symbolic
+execution with model checking for LC bugs, \autocheck\ will be the first case for
+implementation-level dmck. 
 
 \subsection{Deep Semantic-Aware Model Checking (Future Work)}
 
