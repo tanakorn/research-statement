@@ -194,9 +194,26 @@ fast exploration strategies that leverage semantic relationships among all
 necessary events.
 
 To address the incompleteness of SAMC, I am building \fullcheck, a dmck that
-intercepts all types of necessary events to unearth real-world DC bugs, but
-will do so in a fast and scalable manner with the incorporation of semantic
-relationships between the events.
+intercepts all types of necessary events to unearth real-world DC bugs, but will
+do so in a fast and scalable manner with more reduction techniques and the
+incorporation of semantic relationships between the events. To adopt more
+reductions, we have to do it in a wise manner. For example, bounded model
+checking is a technique which explores only limited depth of distributed events
+and most useful if bugs hiding in early steps of execution, however, this
+condition is rarely true in most cases. Microsoft has tackled this challenge for
+LC-bug model checking by introducing \textit{iterative context bounding}
+\cite{Musuvathi+07-BoundedMc} and \textit{bounded partial-order reduction}
+\cite{Coons+13-Bpor}, which bounds the number of context switches instead of the
+events. In the same manner, to effectively integrate bounded model checking with
+dmck, we need a subtle strategy to make sure that we still explore deep enough
+to reach hidden bugs.
+
+However, rather than integrating more reductions, the incorporation of semantic
+relationships between the events is most important. Demeter, the latest state of
+the art for exercising message-computation race, still hits a scalability wall
+and the authors hint that using semantic knowledge is an important future
+direction. I will exploit more semantic knowledge with new adopting reduction
+techniques in the building of \fullcheck.
 
 % I could talk about other reduction technique here, maybe Demeter, bounded
 % model checking from MSR, etc.
