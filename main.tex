@@ -7,7 +7,7 @@
 
 \usepackage{times}
 
-%\usepackage{setspace}
+\usepackage{setspace}
 %\doublespacing
 
 \setlength{\droptitle}{-5.5em} 
@@ -81,17 +81,18 @@ The following sections describe in detail my research work grouped by status.
 \section{Bug Study}
 
 Bug or failure studies can significantly guide many aspects of dependability
-research. Many dependability researchers recently employ \textit{formal bug
-study} approach where they analyze hundreds of reported bugs to identify
-opportunities for new research, build taxonomies of new problems, test new
-tools, and for other purposes. I started my research here by doing formal bug
-study to gain foundations of combating DC bugs.
+research. Many dependability researchers recently employ formal studies on bugs
+and failures such as the studies on large-scale system bugs/failures from
+Microsoft \cite{Guo+13-CureIsWorse, Li+13-ScopeBugStudy}. These studies can
+identify opportunities for new research, build taxonomies of new problems, test
+new tools, and for other purposes. I started my research here by doing formal
+bug study to gain foundations of combating DC bugs.
 
 \subsection{Cloud Bug Study}
 
 As an initiative, our group and I have performed the largest bugs study in six
 important Apache cloud infrastructures including Cassandra, Flume, Hadoop
-MapReduce, HBase, HDFS, and ZooKeeper [appeared in \textit{SoCC '14}]. We
+MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We
 reviewed in total 21,399 submitted issues within a three-year period (2011-2014)
 in Apache bug reposistories. Among these issues, we perform a deep analysis of
 3655 ``vital'' issues (\ie, real issues affecting deployments) with a set of
@@ -102,27 +103,28 @@ work.
 \subsection{DC Bug Taxonoy} 
 
 While there were many LC-bug study, I am not aware of any large-scale study of
-DC bugs. A recent paper from Tsinghua University and Microsoft Research only
-studied five DC bugs in MapReduce systems. To fill the void, I as one of the
-project leaders, have created the largest and most comprehensive taxonomy of 104
-real-world DC bugs (named \taxdc) from Cassandra, HBase, Hadoop MapReduce/Yarn,
-and ZooKeeper [in submission to \textit{ASPLOS '16}]. \taxdc\ contains in-depth
-characteristics of DC bugs, stored in the form of 2083 classification labels and
-4528 lines of re-enumerated steps to the bugs that we manually added. Motivated
-by the availability of bug benchmarks for LC bugs, we will release \taxdc\ as a
+DC bugs. A recent study from Microsoft analyzed the effect of distributed
+concurrency on workload and only studied five DC bugs in MapReduce systems
+\cite{Xiao+14-NonDetMR}. To fill the void, I as one of the project leaders,
+have created the largest and most comprehensive taxonomy of 104 real-world DC
+bugs (named \taxdc) from Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper
+\cite{Gunawi+16-TaxDc-Appear}. \taxdc\ contains in-depth characteristics of DC
+bugs, stored in the form of 2083 classification labels and 4528 lines of
+re-enumerated steps to the bugs that we manually added. Motivated by the
+availability of bug benchmarks for LC bugs, we will release \taxdc\ as a
 large-scale DC bugs benchmark.
 
 With \taxdc\, I can answer important questions such as: How often DC bugs are
-reported from real deployments? What types of DC bugs exist in real world?  What
-are the root causes of DC bugs (out-of-order messages, failures, \etc)? Can
-existing LC-bug-detection tools applicable for DC bugs? How do developers fix DC
-bugs (by adding locks, states, \etc)? What are the inputs/triggering conditions?
-What are the minimum number of distributed events needed to trigger the bugs
-(how many messages to re-order, failures to inject, \etc)? What errors/effects
-(specification violations) are caused by DC bugs (deadlock, data loss, state
-inconsistency, performance problems, \etc)? How do propagation chains form from
-the root causes to errors? The answers to these questions will guide the
-subsequent my research projects.
+reported from real deployments? What types of DC bugs exist in real world?
+What are the root causes of DC bugs (out-of-order messages, failures, \etc)?
+Can existing LC-bug-detection tools applicable for DC bugs? How do developers
+fix DC bugs (by adding locks, states, \etc)? What are the inputs/triggering
+conditions?  What are the minimum number of distributed events needed to
+trigger the bugs (how many messages to re-order, failures to inject, \etc)?
+What errors/effects (specification violations) are caused by DC bugs (deadlock,
+data loss, state inconsistency, performance problems, \etc)? How do propagation
+chains form from the root causes to errors? The answers to these questions will
+guide the subsequent my research projects.
 
 \section{Distributed System Model Checking}
 
@@ -138,25 +140,28 @@ One powerful method for discovering hidden DC bugs is the use of an
 \textit{implementation-level distributed system model checker} (\textbf{dmck}).
 By re-ordering non-deterministic distributed events, a dmck can discover buggy
 interleavings that lead to DC bugs. The last eight years have seen a rise of
-dmcks. One big challenge faced by a dmck is the state-space explosion problem
-(\ie, there are too many distributed events to re-order). To address this,
-existing dmcks adopt a random walk or basic reduction techniques such as dynamic
-partial order reduction (DPOR). Despite these early successes, existing
-approaches cannot unearth many real-world DC bugs, so I am advancing the state
-of the art of dmck to combat DC bugs, which I describe below.
+dmcks such as MaceMC \cite{Killian+07-LifeDeathMaceMC}, \modist\
+\cite{Yang+09-Modist}, or Demeter \cite{Guo+11-Demeter}. One big challenge faced
+by a dmck is the state-space explosion problem (\ie, there are too many
+distributed events to re-order). To address this, existing dmcks adopt a random
+walk or basic reduction techniques such as dynamic partial order reduction
+(DPOR). Despite these early successes, existing approaches cannot unearth many
+real-world DC bugs, so I am advancing the state of the art of dmck to combat DC
+bugs, which I describe below.
 
 \subsection{Semantic-Aware Model Checking (Initial Work)} 
 
 I started my work by specifically addressing two limitations of existing dmcks.
 First, existing dmcks treat every target system as a complete \textit{black
 box}, and therefore perform unnecessary reorderings of distributed events that
-would lead to the same explored states (\ie, redundant executions). Second, they
-do not incorporate complex multiple fault events (\eg, crashes, reboots) into
-their exploration strategies, as such inclusion would exacerbate the state-space
-explosion problem.
+would lead to the same explored states (\ie, redundant executions). Second,
+they do not incorporate complex multiple fault events (\eg, crashes, reboots)
+into their exploration strategies, as such inclusion would exacerbate the
+state-space explosion problem.
 
 To address these limitations, I built Semantic-Aware Model Checking
-(\textbf{SAMC}) [appeared in \textit{OSDI '14} and \textit{ISSTA '15}], a novel
+(\textbf{SAMC})
+\cite{Leesatapornwongsa+15-SamcIssta,Leesatapornwongsa+14-Samc}, a novel
 white-box model checking approach that takes \textit{semantic knowledge} of how
 distributed events (specifically, messages, crashes, and reboots) are processed
 by the target system and incorporates that information in reduction policies.
@@ -231,5 +236,7 @@ code path is not reachable given the limited input. It will perform a backward
 analysis to search for input preconditions to the path. As a result, this
 backward analysis will provide the sequence of input preconditions that cover
 more complex scenarios.
+
+\input{bib}
 
 \end{document}
