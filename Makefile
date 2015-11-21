@@ -6,5 +6,5 @@ main.pdf: *.tex local.bib
 	xelatex main.tex
 
 clean:
-	rm *.log *.aux *.pdf
+	rm *.log *.aux *.pdf *.bbl *.blg *.dvi
 
