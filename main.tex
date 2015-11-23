@@ -20,6 +20,8 @@
 \setlength{\oddsidemargin}{-.26in}
 \setlength{\evensidemargin}{.25in}
 
+\renewcommand{\footnotesize}{\scriptsize}
+
 \begin{document}
 
 \title{Research Statement}
@@ -83,31 +85,38 @@ The following sections describe in detail my research work grouped by status.
 Bug or failure studies can significantly guide many aspects of dependability
 research. Many dependability researchers recently employ formal studies on bugs
 and failures such as the studies on large-scale system bugs/failures from
-Microsoft \cite{Guo+13-CureIsWorse, Li+13-ScopeBugStudy}. These studies can
-identify opportunities for new research, build taxonomies of new problems, test
-new tools, and for other purposes. I started my research here by doing formal
-bug study to gain foundations of combating DC bugs.
+Microsoft \footnote{Zhenyu Guo, Sean McDirmid, Mao Yang, Li Zhuang, Pu Zhang,
+Yingwei Luo, Tom Bergan, Madan Musuvathi, Zheng Zhang, and Lidong Zhou. Failure
+Recovery: When the Cure Is Worse Than the Disease. HotOS '13} \footnote{Sihan
+Li, Hucheng Zhou, Haoxiang Lin, Tian Xiao, Haibo Lin, Wei Lin, and Tao Xie. A
+Characteristic Study On Failures of Production Distributed Data-Parallel
+Programs. ICSE '13}. These studies can identify opportunities for new research,
+build taxonomies of new problems, test new tools, and for other purposes. I
+started my research here by doing formal bug study to gain foundations of
+combating DC bugs.
 
 \subsection{Cloud Bug Study}
 
 As an initiative, our group and I have performed the largest bugs study in six
 important Apache cloud infrastructures including Cassandra, Flume, Hadoop
-MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We
-reviewed in total 21,399 submitted issues within a three-year period (2011-2014)
-in Apache bug reposistories. Among these issues, we perform a deep analysis of
-3655 ``vital'' issues (\ie, real issues affecting deployments) with a set of
-detailed classifications. This work led our group to several interesting
-dependability research questions, and was the main source of my DC-bug taxonomy
-work.
+MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in total
+21,399 submitted issues within a three-year period (2011-2014) in Apache bug
+reposistories. Among these issues, we perform a deep analysis of 3655 ``vital''
+issues (\ie, real issues affecting deployments) with a set of detailed
+classifications. This work led our group to several interesting dependability
+research questions, and was the main source of my DC-bug taxonomy work.
 
 \subsection{DC Bug Taxonoy} 
 
 While there were many LC-bug study, I am not aware of any large-scale study of
 DC bugs. A recent study from Microsoft analyzed the effect of distributed
 concurrency on workload and only studied five DC bugs in MapReduce systems
-\cite{Xiao+14-NonDetMR}. To fill the void, I as one of the project leaders,
-have created the largest and most comprehensive taxonomy of 104 real-world DC
-bugs (named \taxdc) from Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper
+\footnote{Tian Xiao, Jiaxing Zhang, Hucheng Zhou, Zhenyu Guo, Sean McDirmid, Wei
+Lin, Wenguang Chen, and Lidong Zhou. Nondeterminism in MapReduce Considered
+Harmful?  An Empirical Study on Non-commutative Aggregators in MapReduce
+Programs. ICSE '14}. To fill the void, I as one of the project leaders, have
+created the largest and most comprehensive taxonomy of 104 real-world DC bugs
+(named \taxdc) from Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper
 \cite{Gunawi+16-TaxDc-Appear}. \taxdc\ contains in-depth characteristics of DC
 bugs, stored in the form of 2083 classification labels and 4528 lines of
 re-enumerated steps to the bugs that we manually added. Motivated by the
@@ -140,14 +149,20 @@ One powerful method for discovering hidden DC bugs is the use of an
 \textit{implementation-level distributed system model checker} (\textbf{dmck}).
 By re-ordering non-deterministic distributed events, a dmck can discover buggy
 interleavings that lead to DC bugs. The last eight years have seen a rise of
-dmcks such as MaceMC \cite{Killian+07-LifeDeathMaceMC}, \modist\
-\cite{Yang+09-Modist}, or Demeter \cite{Guo+11-Demeter}. One big challenge faced
-by a dmck is the state-space explosion problem (\ie, there are too many
-distributed events to re-order). To address this, existing dmcks adopt a random
-walk or basic reduction techniques such as dynamic partial order reduction
-(DPOR). Despite these early successes, existing approaches cannot unearth many
-real-world DC bugs, so I am advancing the state of the art of dmck to combat DC
-bugs, which I describe below.
+dmcks such as MaceMC \footnote{Charles Killian, James Anderson, Ranjit Jhala,
+and Amin Vahdat. Life, Death, and the Critical Transition: Finding Liveness Bugs
+in Systems Code. NSDI '07}, \modist\ \footnote{Junfeng Yang, Tisheng Chen, Ming
+Wu, Zhilei Xu, Xuezheng Liu, Haoxiang Lin, Mao Yang, Fan Long, Lintao Zhang, and
+Lidong Zhou. MODIST: Transparent Model Checking of Unmodified Distributed
+Systems. NSDI '09}, or Demeter \footnote{Huayang Guo, Ming Wu, Lidong Zhou, Gang
+Hu, Junfeng Yang, and Lintao Zhang. Practical Software Model Checking via
+Dynamic Interface Reduction. SOSP '11}. One big challenge faced by a dmck is the
+state-space explosion problem (\ie, there are too many distributed events to
+re-order). To address this, existing dmcks adopt a random walk or basic
+reduction techniques such as dynamic partial order reduction (DPOR). Despite
+these early successes, existing approaches cannot unearth many real-world DC
+bugs, so I am advancing the state of the art of dmck to combat DC bugs, which I
+describe below.
 
 \subsection{Semantic-Aware Model Checking (Initial Work)} 
 
@@ -160,13 +175,12 @@ into their exploration strategies, as such inclusion would exacerbate the
 state-space explosion problem.
 
 To address these limitations, I built Semantic-Aware Model Checking
-(\textbf{SAMC})
-\cite{Leesatapornwongsa+15-SamcIssta,Leesatapornwongsa+14-Samc}, a novel
-white-box model checking approach that takes \textit{semantic knowledge} of how
-distributed events (specifically, messages, crashes, and reboots) are processed
-by the target system and incorporates that information in reduction policies.
-The policies are based on sound reduction techniques such as DPOR and symmetry.
-The policies tell SAMC not to re-order some pairs of events such as
+(\textbf{SAMC}) \cite{Leesatapornwongsa+15-SamcIssta,Leesatapornwongsa+14-Samc},
+a novel white-box model checking approach that takes \textit{semantic knowledge}
+of how distributed events (specifically, messages, crashes, and reboots) are
+processed by the target system and incorporates that information in reduction
+policies.  The policies are based on sound reduction techniques such as DPOR and
+symmetry.  The policies tell SAMC not to re-order some pairs of events such as
 message-message pairs or crash-message pairs, yet preserves soundness, because
 those cut out re-orderings are redundant.
 
@@ -203,10 +217,12 @@ explosion, could be useful for dmck, but integration must be done in a wise
 manner, because it works well for bugs hiding in early steps of execution only.
 Previous works from Microsoft showed that bounded model checking can work with
 LC-bug model checking effectively by introducing \textit{iterative context
-bounding} \cite{Musuvathi+07-BoundedMc} and \textit{bounded partial-order
-reduction} \cite{Coons+13-Bpor}. For dmck, to effectively integrate bounded
-model checking, we need a subtle strategy to make sure that we still explore
-deep enough to reach hidden bugs.
+bounding} \footnote{Madan Musuvathi, and Shaz Qadeer. Iterative Context Bounding
+for Systematic Testing of Multithreaded Programs. PLDI '07} and \textit{bounded
+partial-order reduction} \footnote{Katherine E. Coons, Madanlal Musuvathi, and
+Kathryn S. McKinley. Bounded Partial-Order Reduction. OOPSLA '13}. For dmck, to
+effectively integrate bounded model checking, we need a subtle strategy to make
+sure that we still explore deep enough to reach hidden bugs.
 
 More reduction techniques are needed, but the semantic-awareness is still the
 most important. Demeter, the latest state of the art for exercising
