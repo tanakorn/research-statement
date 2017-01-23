@@ -31,37 +31,42 @@ Chicago}}
 
 \maketitle
 
-My research focuses on improving the dependability of cloud-scale distributed
-systems such as scale-out storage systems, distributed computing frameworks,
-synchronization services, and cluster management services. Users demand 24/7
-dependability of cloud computing systems so the systems must be reliable.  They
-must be accessible anytime and anywhere, and not lose or corrupt users' data.
+My research focuses on improving the dependability of ``cloud-scale''
+distributed systems such as scale-out storage systems, distributed computing
+frameworks, and cluster management services. Users demand 24/7 dependability of
+cloud computing systems so the systems must be reliable. They must be
+accessible anytime and anywhere, and not lose or corrupt users' data.
 Unfulfilled dependability is costly. Internet service companies collectively
 lose billions of dollars in revenue each year from service downtimes. Yet,
-there are complex challenges to reach an ideal dependability.  Behind cloud
+there are complex challenges to reach an ideal dependability. Behind cloud
 computing is a collection of hundreds of complex systems written in millions of
 lines of code that are brittle and prone to failures.
 
 My main focus is on one unsolved reliability problem in cloud systems that is
 \textbf{\textit{distributed concurrency bugs (DC bugs)}}. DC bugs are caused by
-non-deterministic order of distributed events such as message arrivals, hardware
-crashes and reboots, and other arbitrary faults. Cloud systems execute multiple
-complicated distributed protocols concurrently (\eg, serving users' requests,
-operating some background tasks, and combined with untimely hardware failures).
-The possible interleavings of the distributed events are beyond developer's
-expectations and some interleavings might not be handled properly. The buggy
-distributed interleavings can cause catastrophic failures such as data loss,
-data inconsistencies and downtimes. 
+non-deterministic order of distributed events such as message arrivals,
+hardware crashes and reboots, and other arbitrary faults. Cloud systems execute
+multiple complicated distributed protocols concurrently (\eg, serving users'
+requests, operating some background tasks, and combined with untimely hardware
+failures). The possible interleavings of the distributed events are beyond
+developer's expectations and some interleavings might not be handled properly.
+The buggy distributed interleavings can cause catastrophic failures such as
+data loss, data inconsistencies and downtimes.
 
-Other than DC bugs, I have also involved in other aspects of dependability
-research such as scalability and performance. Scalability allows systems
-surpasses the limit of a single machine in meeting users' increasing demands of
-compute and storage, which led to many inventions of ``cloud-scale'' distributed
-systems. Yet, this new era of cloud-scale distributed systems has given birth to
-a new type of bug: \textbf{scalability bugs}. They are latent bugs that are
-scale-dependent; they only surface in large-scale deployments, but not in
-small/medium-scale ones. Their presence jeopardizes systems reliability and
-availability at scale, and not much attention paid to them.
+In the following sections, I explain how I have addressed DC bugs, started by a
+formal bug study, and building distributed systems model checker. And I also
+describe my other works on other aspects of dependability research.
+
+\if 0
+Scale allows systems surpasses the limit of a single machine in meeting
+users' increasing demands of compute and storage, which led to many inventions
+of ``cloud-scale'' distributed systems. Yet, this new era of cloud-scale
+distributed systems has given birth to a new type of bug: \textbf{scalability
+bugs}. They are latent bugs that are scale-dependent; they only surface in
+large-scale deployments, but not in small/medium-scale ones. Their presence
+jeopardizes systems reliability and availability at scale. And I found not much
+attention paid to them.
+\fi
 
 \if 0
 I have been a leader in a
@@ -78,7 +83,7 @@ scale only (\eg 200 - 500 machines). And I also joined
 Compared to the countless efforts in combating \textbf{\textit{local
 concurrency bugs (LC bugs)}}, which occur due to non-determinism of thread
 scheduling in multi-threading software, DC bugs have not received the same
-amount of attention.  I believe it is time for the dependability community to
+amount of attention. I believe it is time for the dependability community to
 address this important problem in a systematic and comprehensive manner. To
 combat DC bugs, I establish my research in (1) \textbf{\textit{formal bug
 studies}} and (2) \textbf{\textit{distributed system model checking}}. The
