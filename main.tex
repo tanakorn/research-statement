@@ -53,6 +53,28 @@ expectations and some interleavings might not be handled properly. The buggy
 distributed interleavings can cause catastrophic failures such as data loss,
 data inconsistencies and downtimes. 
 
+Other than DC bugs, I have also involved in other aspects of dependability
+research such as scalability and performance. Scalability allows systems
+surpasses the limit of a single machine in meeting users' increasing demands of
+compute and storage, which led to many inventions of ``cloud-scale'' distributed
+systems. Yet, this new era of cloud-scale distributed systems has given birth to
+a new type of bug: \textbf{scalability bugs}. They are latent bugs that are
+scale-dependent; they only surface in large-scale deployments, but not in
+small/medium-scale ones. Their presence jeopardizes systems reliability and
+availability at scale, and not much attention paid to them.
+
+\if 0
+I have been a leader in a
+scalability checking project. In this project, I introduced \sck, \textit{a
+methodology that enables developers to scale-check distributed systems and find
+scalability bugs on \textbf{one machine}}. 
+With \sck, I can reproduce 6
+scalability bugs in Cassandra, Riak, and Voldemort. These bugs manifest in large
+scale only (\eg 200 - 500 machines). And I also joined 
+\fi
+
+\section{Distributed Concurrency (DC) Bugs}\label{dcbugs}
+
 Compared to the countless efforts in combating \textbf{\textit{local
 concurrency bugs (LC bugs)}}, which occur due to non-determinism of thread
 scheduling in multi-threading software, DC bugs have not received the same
@@ -62,7 +84,7 @@ combat DC bugs, I establish my research in (1) \textbf{\textit{formal bug
 studies}} and (2) \textbf{\textit{distributed system model checking}}. The
 following sections explain my research in detail.
 
-\section{Bug Study}
+\subsection{Bug Study}
 
 Bug or failure studies can significantly guide many aspects of dependability
 research. Many dependability researchers have recently employed formal studies
@@ -76,7 +98,7 @@ Data-Parallel Programs. ICSE '13}. These studies can identify opportunities for
 new research, build taxonomies of new problems, or test new tools. I started my
 research by doing formal bug study to gain foundations of combating DC bugs.
 
-\subsection{Cloud Bug Study}
+\subsubsection{Cloud Bug Study}
 
 As an initiative, our group have performed the largest bugs study in six
 important Apache cloud infrastructures including Cassandra, Flume, Hadoop
@@ -87,7 +109,7 @@ real issues affecting deployments) with a set of detailed classifications. This
 work led us to several interesting dependability research questions, and was
 the main source of my DC-bug taxonomy work.
 
-\subsection{DC Bug Taxonomy} 
+\subsubsection{DC Bug Taxonomy} 
 
 While there have been many LC-bug studies, I am not aware of any large-scale
 study of DC bugs. A recent study from Microsoft analyzed the effect of
@@ -116,7 +138,7 @@ data loss, state inconsistency, performance problems, \etc)? How do propagation
 chains form from the root causes to errors? The answers to these questions will
 guide my subsequent research projects.
 
-\section{Distributed System Model Checking}
+\subsection{Distributed System Model Checking}
 
 One powerful method for discovering hidden DC bugs is the use of an
 \textit{implementation-level distributed system model checker} (\textbf{dmck}).
@@ -137,7 +159,7 @@ these early successes, existing approaches cannot unearth many real-world DC
 bugs, so I am advancing the state of the art of dmck to combat DC bugs, which I
 describe below.
 
-\subsection{Semantic-Aware Model Checking (Initial Work)} 
+\subsubsection{Semantic-Aware Model Checking (Initial Work)} 
 
 I started my work by specifically addressing two limitations of existing dmcks.
 First, existing dmcks treat every target system as a complete \textit{black
@@ -164,7 +186,7 @@ after two days. SAMC can find the bugs up to 271x (33x on average) faster
 compared to state-of-the-art techniques. Additionally, I found two new bugs in
 Hadoop MapReduce and ZooKeeper.
 
-\subsection{Full Semantic-Aware Model Checking (Ongoing Work)} 
+\subsubsection{Full Semantic-Aware Model Checking (Ongoing Work)} 
 
 There are two major gaps between existing dmcks (including SAMC) and real-world
 DC bugs. First, dmcks reorder messages by default, but they do not control the
@@ -207,7 +229,7 @@ techniques in the building of \fullcheck.
 % I could talk about other reduction technique here, maybe Demeter, bounded
 % model checking from MSR, etc.
 
-\subsection{Automated Semantic-Aware Model Checking (Ongoing Work)} 
+\subsubsection{Automated Semantic-Aware Model Checking (Ongoing Work)} 
 
 So far, as we leverage domain-specific semantic information into reduction
 strategies, we (or the developers) must manually extract and incorporate the
@@ -223,7 +245,7 @@ symbolic execution and dmck. While others have used symbolic execution with
 model checking for LC bugs, \autocheck\ will be the first case for
 implementation-level dmck. 
 
-\subsection{Deep Semantic-Aware Model Checking (Future Work)}
+\subsubsection{Deep Semantic-Aware Model Checking (Future Work)}
 
 Execution paths to DC bugs often require complex input preconditions such as
 multiple faults, reboots, and protocol initiations. I found that more than 60\%
