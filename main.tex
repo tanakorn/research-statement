@@ -185,9 +185,46 @@ building of \fullcheck.
 % I could talk about other reduction technique here, maybe Demeter, bounded
 % model checking from MSR, etc.
 
+\subsection{Future Work}
+
+%\textbf{Automated Semantic Extractor}: 
+\subsubsection*{Automated Semantic Extractor}
+
+So far, leveraging domain-specific semantic information to dmck requires
+developers to manually extract and incorporate the semantic knowledge. This
+manual process can potentially introduce human errors and breaks soundness.
+Thus, I plan to improve SAMC to automatically and soundly extracts complete
+semantic knowledge into reduction strategies with the help of program analysis.
+To do so, I adopt symbolic execution to create the semantic-aware reduction
+policies. While others have used symbolic execution with model checking for LC
+bugs, this work will be the first case for implementation-level dmck. 
+
+\subsubsection*{Automatic Workload Generator}
+
+Execution paths to DC bugs often require complex input preconditions. I found
+that more than 60\% of DC bugs require more than one protocol initiation, 35\%
+require multiple faults, and 29\% of DC bugs arise within buggy interactions
+between foreground and background protocols. This again highlights the
+complexity of complete systems. If we do not include the complex preconditions,
+the bugs will not surface in checking process. To address this complexity, I
+will adopt systems analysis (static and dynamic) to generate the necessary input
+preconditions to cover more code paths.
+
+\if 0
+I will construct \deepcheck, a dmck with a backward
+static analysis tool that is capable of searching the necessary input
+preconditions to cover unreachable paths. The concept of \deepcheck\ is the dmck
+will run with a limited input precondition. Then, \deepcheck\ will analyze which
+code path is not reachable given the limited input. It will perform a backward
+analysis to search for input preconditions to the path. As a result, this
+backward analysis will provide the sequence of input preconditions that cover
+more complex scenarios.
+\fi
+
+\if 0
 \subsubsection*{Automated Semantic-Aware Model Checking (Ongoing Work)} 
 
-So far, as we leverage domain-specific semantic information into reduction
+So far, as I leverage domain-specific semantic information into reduction
 strategies, we (or the developers) must manually extract and incorporate the
 semantic knowledge and write the corresponding reduction policies. This manual
 process, based on high-level human understanding of the codebase, can
@@ -219,6 +256,7 @@ code path is not reachable given the limited input. It will perform a backward
 analysis to search for input preconditions to the path. As a result, this
 backward analysis will provide the sequence of input preconditions that cover
 more complex scenarios.
+\fi
 
 \section{Other Works}
 
