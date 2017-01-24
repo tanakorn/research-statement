@@ -34,17 +34,16 @@ Chicago}}
 My research focuses on improving the dependability of ``\textit{cloud-scale}''
 distributed systems such as scale-out storage systems, distributed computing
 frameworks, and cluster management services. Users demand 24/7 dependability of
-cloud computing systems so the systems must be reliable. They must be
-accessible anytime and anywhere, and not lose or corrupt users' data.
-Unfulfilled dependability is costly. Internet service companies collectively
-lose billions of dollars in revenue each year from service downtimes. Yet,
-there are complex challenges to reach an ideal dependability. Behind cloud
-computing is a collection of hundreds of complex systems written in millions of
-lines of code that are brittle and prone to failures.
+cloud computing systems. Unfulfilled dependability is costly. Internet service
+companies collectively lose billions of dollars in revenue each year from
+service downtimes. Yet, there are complex challenges to reach an ideal
+dependability. Behind cloud computing is a collection of hundreds of complex
+systems written in millions of lines of code that are brittle and prone to
+failures.
 
 My main focus is on one unsolved reliability problem in cloud systems that is
 \textbf{\textit{distributed concurrency (DC) bugs}}. DC bugs are caused by
-non-deterministic order of distributed events such as message arrivals, hardware
+nondeterministic order of distributed events such as message arrivals, hardware
 crashes and reboots, and other arbitrary faults. Cloud systems execute multiple
 complicated distributed protocols concurrently (\eg, serving users' requests,
 operating some background tasks, and combined with untimely hardware failures).
@@ -54,14 +53,13 @@ distributed interleavings can cause catastrophic failures such as data loss,
 data inconsistencies and downtimes.
 
 In the following sections, I explain how I have addressed DC bugs, started by a
-formal bug study, and building distributed systems model checker, and my future
-plans. And I also describe my other works on other aspects of dependability
-research.
+formal bug study, and building distributed systems model checker. And I also
+describe my other works on other aspects of dependability research.
 
 \section{Distributed Concurrency (DC) Bugs}\label{dcbugs}
 
 Compared to the countless efforts in combating \textbf{\textit{local concurrency
-(LC) bugs}}, which occur due to non-determinism of multi-threading in software,
+(LC) bugs}}, which occur due to nondeterminism of multi-threading,
 DC bugs have not received the same amount of attention. This is time for the
 dependability community to address this important problem in a systematic and
 comprehensive manner. To combat DC bugs, I establish my research in (1)
@@ -130,7 +128,7 @@ guide my subsequent research projects.
 
 One powerful method for discovering hidden DC bugs is the use of an
 \textit{implementation-level distributed system model checker} (\textbf{dmck}).
-By re-ordering non-deterministic distributed events, a dmck can discover buggy
+By re-ordering nondeterministic distributed events, a dmck can discover buggy
 interleavings that lead to DC bugs. The last eight years have seen a rise of
 dmcks such as MaceMC \footnote{Charles Killian, James Anderson, Ranjit Jhala,
 and Amin Vahdat. Life, Death, and the Critical Transition: Finding Liveness Bugs
@@ -149,10 +147,10 @@ describe below.
 
 \subsubsection*{Semantic-Aware Model Checking (Initial Work)} 
 
-I started my work by specifically addressing two limitations of existing dmcks.
+My work started by specifically addressing two limitations of existing dmcks.
 First, existing dmcks treat every target system as a complete \textit{black
-box}, and therefore perform unnecessary reorderings of distributed events that
-would lead to the same explored states (\ie, redundant executions). Second,
+box}, and perform unnecessary reorderings of distributed events that
+would lead to the same states (\ie, redundant executions). Second,
 they do not incorporate complex multiple fault events (\eg, crashes, reboots)
 into their exploration strategies, as such inclusion would exacerbate the
 state-space explosion problem.
@@ -161,13 +159,13 @@ To address these limitations, I built Semantic-Aware Model Checking
 (\textbf{SAMC}) \cite{Leesatapornwongsa+15-SamcIssta,Leesatapornwongsa+14-Samc},
 a novel white-box model checking approach that takes \textit{semantic knowledge}
 of how distributed events (specifically, messages, crashes, and reboots) are
-processed by the target system and incorporates that information in reduction
+processed by the target system and incorporates that to create reduction
 policies. The policies are based on sound reduction techniques such as DPOR and
 symmetry. The policies tell SAMC not to re-order some pairs of events such as
-message-message pairs or crash-message pairs, yet preserves soundness, because
+message-message pairs, and message-crash pairs, yet preserves soundness, because
 those cut out re-orderings are redundant. 
 
-I built SAMC from scratch with 10 KLOC and I was able to reproduce 12 old bugs
+I built SAMC from scratch, I was able to reproduce 12 old bugs
 in 3 cloud systems involving 30-120 distributed events and multiple crashes and
 reboots. Some of these bugs cannot be unearthed by non-SAMC approaches, even
 after two days. SAMC can find the bugs up to 271x (33x on average) faster
@@ -180,23 +178,40 @@ introduced is also applicable to multithreading software model cheker as well}.
 
 There are two major gaps between existing dmcks (including SAMC) and real-world
 DC bugs. First, dmcks reorder messages by default, but they do not control the
-timings of all types of events necessary to unearth DC bugs. For example, MaceMC
+timings of all types of events necessary for DC bugs. For example, MaceMC
 and SAMC do not intercept local computation and do not exercise timeouts;
 \modist\ and Demeter do not inject multiple crash and reboot timings; and none
 of the above include other faults such as untimely disk faults.
+%
+Second, controlling all necessary events will ``blow up'' the exploration space.
+Thus, more innovations are needed to devise fast exploration strategies.
 
-Second, controlling all necessary events is technically doable, but it will
-``blow up'' the exploration space. The use of semantic relationships between
-multiple events such as message-message and crash-message semantics in SAMC can
-remove redundant re-orderings. However, more innovations are needed to devise
-fast exploration strategies that leverage semantic relationships among all
-necessary events.
+%that leverage semantic relationships among all necessary events.
 
-To address the incompleteness of SAMC, I am building \fullcheck, a dmck that
-intercepts all types of necessary events to unearth real-world DC bugs, but will
-do so in a fast and scalable manner. \fullcheck\ will adopt more advanced
-reduction techniques assisted by the incorporation of semantic relationships
-between the events. 
+Demeter, the latest state of the art for exercising message-computation race,
+still hits a scalability wall and the authors hint that using semantic knowledge
+is an important future direction. Thus, to address the problem, I am building
+\fullcheck, a dmck that intercepts all necessary events to unearth DC bugs, but
+will do so in a fast and scalable manner. I will invent more powerful
+semantic-awareness principles while adopting new reduction techniques in the
+building of \fullcheck.
+
+%\fullcheck\ will adopt more advanced reduction techniques assisted by
+%the incorporation of semantic relationships between the events. 
+
+\if 0
+To address the problem, I am building \fullcheck, a dmck that intercepts all
+necessary events to unearth DC bugs, but will do so in a fast and scalable
+manner. \fullcheck\ will adopt more advanced reduction techniques assisted by
+the incorporation of semantic relationships between the events. 
+
+More reduction techniques are needed, but the semantic-awareness is still the
+most important. Demeter, the latest state of the art for exercising
+message-computation race, still hits a scalability wall and the authors hint
+that using semantic knowledge is an important future direction. I will build
+more powerful semantic-awareness principles while adopting new reduction
+techniques in the building of \fullcheck.
+\fi
 
 \if 0
 For example, bounded model checking is a popular technique,
@@ -212,13 +227,6 @@ Kathryn S. McKinley. Bounded Partial-Order Reduction. OOPSLA '13}. For dmck, to
 effectively integrate bounded model checking, we need a subtle strategy to make
 sure that we still explore deep enough to reach hidden bugs.
 \fi
-
-More reduction techniques are needed, but the semantic-awareness is still the
-most important. Demeter, the latest state of the art for exercising
-message-computation race, still hits a scalability wall and the authors hint
-that using semantic knowledge is an important future direction. I will build
-more powerful semantic-awareness principles while adopting new reduction
-techniques in the building of \fullcheck.
 
 % I could talk about other reduction technique here, maybe Demeter, bounded
 % model checking from MSR, etc.
@@ -260,8 +268,7 @@ more complex scenarios.
 
 \section{Other Works}
 
-Other than DC bugs, I also worked in projects related to other aspects of
-dependability. My colleagues and I performed the largest bugs study in six
+Other than DC bugs, I joined a project performing the largest bugs study in six
 important Apache cloud infrastructures including Cassandra, Flume, Hadoop
 MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in total
 21,399 submitted issues within 2011-2014 in Apache bug repositories. We perform
