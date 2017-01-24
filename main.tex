@@ -286,12 +286,21 @@ in small/medium-scale ones. Their presence jeopardizes systems reliability and
 availability at scale. 
 \fi 
 
-To address this, I started a scalability checking project. In this project, I
-introduced \sck, \textit{a methodology that enables developers to scale-check
-distributed systems and find scalability bugs on \textbf{one machine}}. With
+To address this problem, I started a pilot work on scalability checking. I
+introduced \sck, a methodology that enables developers to scale-check
+distributed systems and find scalability bugs on \textit{one machine}. With
 \sck, I can reproduce 6 scalability bugs in Cassandra, Riak, and Voldemort.
-These bugs manifest in large scale only (\eg 200 - 500 machines). The work is in
-submission to HotOS.
+These bugs manifest in large scale only (\eg 200-500 machines).  The work is in
+submission to HotOS '17.
+
+\section{Summary}
+
+I envision the future of cloud-scale distributed systems to be ``non-stop''. I
+am improving dependability of systems by addressing well-known unsolved problem
+of DC bugs via model checker, and tackling a new class of scalability bugs that
+the systems community rarely pay attention to. A journey toward the goal is a
+long road, but I believe my research advances systems community toward this
+direction. 
 
 \input{bib}
 
