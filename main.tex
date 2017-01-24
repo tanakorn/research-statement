@@ -43,66 +43,46 @@ computing is a collection of hundreds of complex systems written in millions of
 lines of code that are brittle and prone to failures.
 
 My main focus is on one unsolved reliability problem in cloud systems that is
-\textbf{\textit{distributed concurrency bugs (DC bugs)}}. DC bugs are caused by
-non-deterministic order of distributed events such as message arrivals,
-hardware crashes and reboots, and other arbitrary faults. Cloud systems execute
-multiple complicated distributed protocols concurrently (\eg, serving users'
-requests, operating some background tasks, and combined with untimely hardware
-failures). The possible interleavings of the distributed events are beyond
-developer's expectations and some interleavings might not be handled properly.
-The buggy distributed interleavings can cause catastrophic failures such as
-data loss, data inconsistencies and downtimes.
+\textbf{\textit{distributed concurrency (DC) bugs}}. DC bugs are caused by
+non-deterministic order of distributed events such as message arrivals, hardware
+crashes and reboots, and other arbitrary faults. Cloud systems execute multiple
+complicated distributed protocols concurrently (\eg, serving users' requests,
+operating some background tasks, and combined with untimely hardware failures).
+The possible interleavings of the distributed events are beyond developer's
+expectations and some interleavings might not be handled properly.  The buggy
+distributed interleavings can cause catastrophic failures such as data loss,
+data inconsistencies and downtimes.
 
 In the following sections, I explain how I have addressed DC bugs, started by a
-formal bug study, and building distributed systems model checker. And I also
-describe my other works on other aspects of dependability research.
-
-\if 0
-Scale allows systems surpasses the limit of a single machine in meeting
-users' increasing demands of compute and storage, which led to many inventions
-of ``cloud-scale'' distributed systems. Yet, this new era of cloud-scale
-distributed systems has given birth to a new type of bug: \textbf{scalability
-bugs}. They are latent bugs that are scale-dependent; they only surface in
-large-scale deployments, but not in small/medium-scale ones. Their presence
-jeopardizes systems reliability and availability at scale. And I found not much
-attention paid to them.
-\fi
-
-\if 0
-I have been a leader in a
-scalability checking project. In this project, I introduced \sck, \textit{a
-methodology that enables developers to scale-check distributed systems and find
-scalability bugs on \textbf{one machine}}. 
-With \sck, I can reproduce 6
-scalability bugs in Cassandra, Riak, and Voldemort. These bugs manifest in large
-scale only (\eg 200 - 500 machines). And I also joined 
-\fi
+formal bug study, and building distributed systems model checker, and my future
+plans. And I also describe my other works on other aspects of dependability
+research.
 
 \section{Distributed Concurrency (DC) Bugs}\label{dcbugs}
 
-Compared to the countless efforts in combating \textbf{\textit{local
-concurrency bugs (LC bugs)}}, which occur due to non-determinism of thread
-scheduling in multi-threading software, DC bugs have not received the same
-amount of attention. I believe it is time for the dependability community to
-address this important problem in a systematic and comprehensive manner. To
-combat DC bugs, I establish my research in (1) \textbf{\textit{formal bug
-studies}} and (2) \textbf{\textit{distributed system model checking}}. The
-following sections explain my research in detail.
+Compared to the countless efforts in combating \textbf{\textit{local concurrency
+(LC) bugs}}, which occur due to non-determinism of multi-threading in software,
+DC bugs have not received the same amount of attention. This is time for the
+dependability community to address this important problem in a systematic and
+comprehensive manner. To combat DC bugs, I establish my research in (1)
+\textbf{\textit{formal bug studies}} and (2) \textbf{\textit{distributed system
+model checking}}. 
 
-\subsection{Bug Study}
+\subsection{DC Bug Study \& Taxonomy} 
 
 Bug or failure studies can significantly guide many aspects of dependability
-research. Many dependability researchers have recently employed formal studies
-on bugs and failures such as the studies on large-scale system bugs/failures
-from Microsoft \footnote{Zhenyu Guo, Sean McDirmid, Mao Yang, Li Zhuang, Pu
-Zhang, Yingwei Luo, Tom Bergan, Madan Musuvathi, Zheng Zhang, and Lidong Zhou.
-Failure Recovery: When the Cure Is Worse Than the Disease. HotOS '13}
-\footnote{Sihan Li, Hucheng Zhou, Haoxiang Lin, Tian Xiao, Haibo Lin, Wei Lin,
-and Tao Xie. A Characteristic Study On Failures of Production Distributed
-Data-Parallel Programs. ICSE '13}. These studies can identify opportunities for
-new research, build taxonomies of new problems, or test new tools. I started my
-research by doing formal bug study to gain foundations of combating DC bugs.
+research, and introduce new research problem. Many dependability researchers
+have recently employed formal studies on bugs and failures such as the studies
+on large-scale system bugs/failures from Microsoft \footnote{Zhenyu Guo, Sean
+McDirmid, Mao Yang, Li Zhuang, Pu Zhang, Yingwei Luo, Tom Bergan, Madan
+Musuvathi, Zheng Zhang, and Lidong Zhou.  Failure Recovery: When the Cure Is
+Worse Than the Disease. HotOS '13} \footnote{Sihan Li, Hucheng Zhou, Haoxiang
+Lin, Tian Xiao, Haibo Lin, Wei Lin, and Tao Xie. A Characteristic Study On
+Failures of Production Distributed Data-Parallel Programs. ICSE '13}.  Thus, I
+started my research by doing formal bug study to gain foundations of combating
+DC bugs.
 
+\if 0
 \subsubsection{Cloud Bug Study}
 
 As an initiative, our group have performed the largest bugs study in six
@@ -110,11 +90,14 @@ important Apache cloud infrastructures including Cassandra, Flume, Hadoop
 MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in
 total 21,399 submitted issues within a three-year period (2011-2014) in Apache
 bug repositories. We perform a deep analysis of 3,655 ``vital'' issues (\ie,
-real issues affecting deployments) with a set of detailed classifications. This
+real issues affecting deployments) with a set of detailed classifications. 
+\fi
+
+\if 0
+This
 work led us to several interesting dependability research questions, and was
 the main source of my DC-bug taxonomy work.
-
-\subsubsection{DC Bug Taxonomy} 
+\fi
 
 While there have been many LC-bug studies, I am not aware of any large-scale
 study of DC bugs. A recent study from Microsoft analyzed the effect of
@@ -128,7 +111,7 @@ real-world DC bugs (named \taxdc) from Cassandra, HBase, Hadoop MapReduce/Yarn,
 and ZooKeeper \cite{Gunawi+16-TaxDc-Appear}. \taxdc\ contains in-depth
 characteristics of DC bugs, stored in the form of 2,083 classification labels
 and 4,528 lines of re-enumerated steps to the bugs that I manually added.
-Motivated by the availability of bug benchmarks for LC bugs, I will release
+Motivated by the availability of bug benchmarks for LC bugs, I release
 \taxdc\ as a large-scale DC bugs benchmark.
 
 With \taxdc\, I can answer important questions such as: How often are DC bugs 
@@ -164,7 +147,7 @@ these early successes, existing approaches cannot unearth many real-world DC
 bugs, so I am advancing the state of the art of dmck to combat DC bugs, which I
 describe below.
 
-\subsubsection{Semantic-Aware Model Checking (Initial Work)} 
+\subsubsection*{Semantic-Aware Model Checking (Initial Work)} 
 
 I started my work by specifically addressing two limitations of existing dmcks.
 First, existing dmcks treat every target system as a complete \textit{black
@@ -179,19 +162,21 @@ To address these limitations, I built Semantic-Aware Model Checking
 a novel white-box model checking approach that takes \textit{semantic knowledge}
 of how distributed events (specifically, messages, crashes, and reboots) are
 processed by the target system and incorporates that information in reduction
-policies.  The policies are based on sound reduction techniques such as DPOR and
-symmetry.  The policies tell SAMC not to re-order some pairs of events such as
+policies. The policies are based on sound reduction techniques such as DPOR and
+symmetry. The policies tell SAMC not to re-order some pairs of events such as
 message-message pairs or crash-message pairs, yet preserves soundness, because
-those cut out re-orderings are redundant.
+those cut out re-orderings are redundant. 
 
 I built SAMC from scratch with 10 KLOC and I was able to reproduce 12 old bugs
 in 3 cloud systems involving 30-120 distributed events and multiple crashes and
 reboots. Some of these bugs cannot be unearthed by non-SAMC approaches, even
 after two days. SAMC can find the bugs up to 271x (33x on average) faster
 compared to state-of-the-art techniques. Additionally, I found two new bugs in
-Hadoop MapReduce and ZooKeeper.
+Hadoop MapReduce and ZooKeeper. Although, SAMC was built for checking
+distributed systems, \textit{the principle of \textbf{semantic awareness} I
+introduced is also applicable to multithreading software model cheker as well}.
 
-\subsubsection{Full Semantic-Aware Model Checking (Ongoing Work)} 
+\subsubsection*{Full Semantic-Aware Model Checking (Ongoing Work)} 
 
 There are two major gaps between existing dmcks (including SAMC) and real-world
 DC bugs. First, dmcks reorder messages by default, but they do not control the
@@ -211,7 +196,10 @@ To address the incompleteness of SAMC, I am building \fullcheck, a dmck that
 intercepts all types of necessary events to unearth real-world DC bugs, but will
 do so in a fast and scalable manner. \fullcheck\ will adopt more advanced
 reduction techniques assisted by the incorporation of semantic relationships
-between the events. For example, bounded model checking is a popular technique,
+between the events. 
+
+\if 0
+For example, bounded model checking is a popular technique,
 which explores only limited depth of distributed events to avoid state-space
 explosion, could be useful for dmck, but integration must be done in a wise
 manner, because it works well for bugs hiding in early steps of execution only.
@@ -223,6 +211,7 @@ partial-order reduction} \footnote{Katherine E. Coons, Madanlal Musuvathi, and
 Kathryn S. McKinley. Bounded Partial-Order Reduction. OOPSLA '13}. For dmck, to
 effectively integrate bounded model checking, we need a subtle strategy to make
 sure that we still explore deep enough to reach hidden bugs.
+\fi
 
 More reduction techniques are needed, but the semantic-awareness is still the
 most important. Demeter, the latest state of the art for exercising
@@ -234,7 +223,7 @@ techniques in the building of \fullcheck.
 % I could talk about other reduction technique here, maybe Demeter, bounded
 % model checking from MSR, etc.
 
-\subsubsection{Automated Semantic-Aware Model Checking (Ongoing Work)} 
+\subsubsection*{Automated Semantic-Aware Model Checking (Ongoing Work)} 
 
 So far, as we leverage domain-specific semantic information into reduction
 strategies, we (or the developers) must manually extract and incorporate the
@@ -250,7 +239,7 @@ symbolic execution and dmck. While others have used symbolic execution with
 model checking for LC bugs, \autocheck\ will be the first case for
 implementation-level dmck. 
 
-\subsubsection{Deep Semantic-Aware Model Checking (Future Work)}
+\subsubsection*{Deep Semantic-Aware Model Checking (Future Work)}
 
 Execution paths to DC bugs often require complex input preconditions such as
 multiple faults, reboots, and protocol initiations. I found that more than 60\%
@@ -268,6 +257,33 @@ code path is not reachable given the limited input. It will perform a backward
 analysis to search for input preconditions to the path. As a result, this
 backward analysis will provide the sequence of input preconditions that cover
 more complex scenarios.
+
+\section{Other Works}
+
+Other than DC bugs, I also worked in projects related to other aspects of
+dependability. My colleagues and I performed the largest bugs study in six
+important Apache cloud infrastructures including Cassandra, Flume, Hadoop
+MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in total
+21,399 submitted issues within 2011-2014 in Apache bug repositories. We perform
+a deep analysis of 3,655 ``vital'' issues (\ie, real issues affecting
+deployments) with a set of detailed classifications. 
+
+From this, I can identify a new types of bugs that are \textit{specific} to
+scalability aspect of cloud-scale distributed systems, but not much attention
+paid on them, which I call ``\textbf{scalability bugs}''
+
+Cloud-scale distributed systems surpass the limit of a single machine in meeting
+users' increasing demands of compute and storage, yet they has given birth to a
+new type of bug: \textbf{scalability bugs}. They are latent bugs that are
+scale-dependent; they only surface in large-scale deployments, but not in
+small/medium-scale ones. Their presence jeopardizes systems reliability and
+availability at scale. And I found not much attention paid to them.
+
+To address this new type of bugs, I started a scalability checking project. In
+this project, I introduced \sck, \textit{a methodology that enables developers
+to scale-check distributed systems and find scalability bugs on \textbf{one
+machine}}. With \sck, I can reproduce 6 scalability bugs in Cassandra, Riak,
+and Voldemort. These bugs manifest in large scale only (\eg 200 - 500 machines).
 
 \input{bib}
 
