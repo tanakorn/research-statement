@@ -1,0 +1,56 @@
+
+\if 0
+\subsubsection{Cloud Bug Study}
+
+As an initiative, our group have performed the largest bugs study in six
+important Apache cloud infrastructures including Cassandra, Flume, Hadoop
+MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in
+total 21,399 submitted issues within a three-year period (2011-2014) in Apache
+bug repositories. We perform a deep analysis of 3,655 ``vital'' issues (\ie,
+real issues affecting deployments) with a set of detailed classifications. 
+\fi
+
+\if 0
+This
+work led us to several interesting dependability research questions, and was
+the main source of my DC-bug taxonomy work.
+\fi
+
+\if 0
+To address the problem, I am building \fullcheck, a dmck that intercepts all
+necessary events to unearth DC bugs, but will do so in a fast and scalable
+manner. \fullcheck\ will adopt more advanced reduction techniques assisted by
+the incorporation of semantic relationships between the events. 
+
+More reduction techniques are needed, but the semantic-awareness is still the
+most important. Demeter, the latest state of the art for exercising
+message-computation race, still hits a scalability wall and the authors hint
+that using semantic knowledge is an important future direction. I will build
+more powerful semantic-awareness principles while adopting new reduction
+techniques in the building of \fullcheck.
+\fi
+
+\if 0
+For example, bounded model checking is a popular technique,
+which explores only limited depth of distributed events to avoid state-space
+explosion, could be useful for dmck, but integration must be done in a wise
+manner, because it works well for bugs hiding in early steps of execution only.
+Previous works from Microsoft showed that bounded model checking can work with
+LC-bug model checking effectively by introducing \textit{iterative context
+bounding} \footnote{Madan Musuvathi, and Shaz Qadeer. Iterative Context Bounding
+for Systematic Testing of Multithreaded Programs. PLDI '07} and \textit{bounded
+partial-order reduction} \footnote{Katherine E. Coons, Madanlal Musuvathi, and
+Kathryn S. McKinley. Bounded Partial-Order Reduction. OOPSLA '13}. For dmck, to
+effectively integrate bounded model checking, we need a subtle strategy to make
+sure that we still explore deep enough to reach hidden bugs.
+\fi
+
+\if 0
+From this, I can identify a new types of bugs that are \textit{specific} to
+scalability aspect of cloud-scale distributed systems, but not much attention
+paid on them, which I call ``\textbf{scalability bugs}''. They are latent bugs
+that are scale-dependent; they only surface in large-scale deployments, but not
+in small/medium-scale ones. Their presence jeopardizes systems reliability and
+availability at scale. 
+\fi 
+
