@@ -266,24 +266,32 @@ important Apache cloud infrastructures including Cassandra, Flume, Hadoop
 MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in total
 21,399 submitted issues within 2011-2014 in Apache bug repositories. We perform
 a deep analysis of 3,655 ``vital'' issues (\ie, real issues affecting
-deployments) with a set of detailed classifications. 
+deployments) with a set of detailed classifications. This study show new types
+of bugs that are \textit{specific} to cloud-scale distributed systems only. 
 
-From this, I can identify a new types of bugs that are \textit{specific} to
-scalability aspect of cloud-scale distributed systems, but not much attention
-paid on them, which I call ``\textbf{scalability bugs}''
+\subsection{Scalability Bugs}
 
-Cloud-scale distributed systems surpass the limit of a single machine in meeting
-users' increasing demands of compute and storage, yet they has given birth to a
-new type of bug: \textbf{scalability bugs}. They are latent bugs that are
+From cloud-specific bugs my study revealed, I have address one disregarded type
+of bug to address, which is scalability bugs. They are latent bugs that are
 scale-dependent; they only surface in large-scale deployments, but not in
 small/medium-scale ones. Their presence jeopardizes systems reliability and
-availability at scale. And I found not much attention paid to them.
+availability at scale. 
 
-To address this new type of bugs, I started a scalability checking project. In
-this project, I introduced \sck, \textit{a methodology that enables developers
-to scale-check distributed systems and find scalability bugs on \textbf{one
-machine}}. With \sck, I can reproduce 6 scalability bugs in Cassandra, Riak,
-and Voldemort. These bugs manifest in large scale only (\eg 200 - 500 machines).
+\if 0
+From this, I can identify a new types of bugs that are \textit{specific} to
+scalability aspect of cloud-scale distributed systems, but not much attention
+paid on them, which I call ``\textbf{scalability bugs}''. They are latent bugs
+that are scale-dependent; they only surface in large-scale deployments, but not
+in small/medium-scale ones. Their presence jeopardizes systems reliability and
+availability at scale. 
+\fi 
+
+To address this, I started a scalability checking project. In this project, I
+introduced \sck, \textit{a methodology that enables developers to scale-check
+distributed systems and find scalability bugs on \textbf{one machine}}. With
+\sck, I can reproduce 6 scalability bugs in Cassandra, Riak, and Voldemort.
+These bugs manifest in large scale only (\eg 200 - 500 machines). The work is in
+submission to HotOS.
 
 \input{bib}
 
