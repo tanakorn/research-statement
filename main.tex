@@ -76,36 +76,31 @@ McDirmid, Mao Yang, Li Zhuang, Pu Zhang, Yingwei Luo, Tom Bergan, Madan
 Musuvathi, Zheng Zhang, and Lidong Zhou.  Failure Recovery: When the Cure Is
 Worse Than the Disease. HotOS '13} \footnote{Sihan Li, Hucheng Zhou, Haoxiang
 Lin, Tian Xiao, Haibo Lin, Wei Lin, and Tao Xie. A Characteristic Study On
-Failures of Production Distributed Data-Parallel Programs. ICSE '13}.  Thus, I
-started my research by doing formal bug study to gain foundations of combating
-DC bugs.
+Failures of Production Distributed Data-Parallel Programs. ICSE '13}.
 
-While there have been many LC-bug studies, I am not aware of any large-scale
-study of DC bugs. A recent study from Microsoft analyzed the effect of
-distributed concurrency on workload and only studied five DC bugs in MapReduce
-systems \footnote{Tian Xiao, Jiaxing Zhang, Hucheng Zhou, Zhenyu Guo, Sean
-McDirmid, Wei Lin, Wenguang Chen, and Lidong Zhou. Nondeterminism in MapReduce
-Considered Harmful?  An Empirical Study on Non-commutative Aggregators in
-MapReduce Programs. ICSE '14}. To fill the void, I as one of the project
-leaders, have created the largest and most comprehensive taxonomy of 104
-real-world DC bugs (named \taxdc) from Cassandra, HBase, Hadoop MapReduce/Yarn,
-and ZooKeeper \cite{Gunawi+16-TaxDc-Appear}. \taxdc\ contains in-depth
-characteristics of DC bugs, stored in the form of 2,083 classification labels
-and 4,528 lines of re-enumerated steps to the bugs that I manually added.
-Motivated by the availability of bug benchmarks for LC bugs, I release
-\taxdc\ as a large-scale DC bugs benchmark.
+While there are many LC-bug studies, I am not aware of any large-scale DC-bug
+study. A recent study from Microsoft analyzed the effect of distributed
+concurrency on workload and only studied five DC bugs in MapReduce
+\footnote{Tian Xiao, Jiaxing Zhang, Hucheng Zhou, Zhenyu Guo, Sean McDirmid, Wei
+Lin, Wenguang Chen, and Lidong Zhou. Nondeterminism in MapReduce Considered
+Harmful?  An Empirical Study on Non-commutative Aggregators in MapReduce
+Programs. ICSE '14}. To fill the void, I as one of the project leaders, have
+created the largest and most comprehensive taxonomy of 104 real-world DC bugs
+(named \taxdc) from Cassandra, HBase, Hadoop MapReduce, and ZooKeeper
+\cite{Gunawi+16-TaxDc-Appear}. \taxdc\ contains in-depth characteristics of DC
+bugs, stored in the form of 2,083 classification labels and 4,528 steps to
+re-enumerate the bugs that I manually added. It was publicly released as the
+first large-scale DC bugs benchmark.
+%Motivated by the availability of bug benchmarks for LC bugs, I release
+%\taxdc\ as a large-scale DC bugs benchmark.
 
-With \taxdc\, I can answer important questions such as: How often are DC bugs 
-reported from real deployments? What types of DC bugs exist in real world?
-What are the root causes of DC bugs (out-of-order messages, failures, \etc)?
-Are existing LC-bug-detection tools applicable for DC bugs? How do developers
-fix DC bugs (by adding locks, states, \etc)? What are the inputs/triggering
-conditions?  What are the minimum number of distributed events needed to
-trigger the bugs (how many messages to re-order, failures to inject, \etc)?
-What errors/effects (specification violations) are caused by DC bugs (deadlock,
-data loss, state inconsistency, performance problems, \etc)? How do propagation
-chains form from the root causes to errors? The answers to these questions will
-guide my subsequent research projects.
+With \taxdc\, I can answer important questions such as: 
+What are the root causes of DC bugs?
+What are the inputs/triggering conditions? 
+What errors/effects (specification violations) are caused by DC bugs?
+Are existing LC-bug-detection tools applicable for DC bugs? 
+How do developers fix DC bugs? 
+The answers to these questions will guide my subsequent research projects.
 
 \subsection{Distributed System Model Checking}
 
@@ -187,13 +182,17 @@ building of \fullcheck.
 
 \subsection{Future Work}
 
-%\textbf{Automated Semantic Extractor}: 
+\fullcheck\ will make bug checking possible in practical time, but it still
+requires manual efforts from developers/testers to adopt it. My future work plan
+to automate current manual process to reduce burdensome from developers/testers
+as I explain next.
+
 \subsubsection*{Automated Semantic Extractor}
 
 So far, leveraging domain-specific semantic information to dmck requires
 developers to manually extract and incorporate the semantic knowledge. This
 manual process can potentially introduce human errors and breaks soundness.
-Thus, I plan to improve SAMC to automatically and soundly extracts complete
+Thus, I plan to advance SAMC to automatically and soundly extracts complete
 semantic knowledge into reduction strategies with the help of program analysis.
 To do so, I adopt symbolic execution to create the semantic-aware reduction
 policies. While others have used symbolic execution with model checking for LC
@@ -201,14 +200,13 @@ bugs, this work will be the first case for implementation-level dmck.
 
 \subsubsection*{Automatic Workload Generator}
 
-Execution paths to DC bugs often require complex input preconditions. I found
-that more than 60\% of DC bugs require more than one protocol initiation, 35\%
-require multiple faults, and 29\% of DC bugs arise within buggy interactions
-between foreground and background protocols. This again highlights the
-complexity of complete systems. If we do not include the complex preconditions,
-the bugs will not surface in checking process. To address this complexity, I
-will adopt systems analysis (static and dynamic) to generate the necessary input
-preconditions to cover more code paths.
+From my study, I found that more than 60\% of DC bugs require more than one
+request workload, 35\% require multiple faults, and 29\% of DC bugs arise
+within buggy interactions between foreground and background protocols. This
+again highlights the complexity of complete systems. If we do not include the
+complex preconditions, the bugs will not surface in checking process. To
+address this complexity, I will adopt static and dynamic analysis to generate
+the necessary input preconditions to cover more complex test scenarios.
 
 \if 0
 I will construct \deepcheck, a dmck with a backward
@@ -266,15 +264,15 @@ MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in total
 21,399 submitted issues within 2011-2014 in Apache bug repositories. We perform
 a deep analysis of 3,655 ``vital'' issues (\ie, real issues affecting
 deployments) with a set of detailed classifications. This study show new types
-of bugs that are \textit{specific} to cloud-scale distributed systems only. 
+of bugs that are \textit{specific} to cloud-scale distributed systems only.
+Motivated by these new bug types, I started a pilot work in area of
+``\textit{\textbf{scalability bugs}}''.
 
 \subsection{Scalability Bugs}
 
-From cloud-specific bugs my study revealed, I have address one disregarded type
-of bug to address, which is scalability bugs. They are latent bugs that are
-scale-dependent; they only surface in large-scale deployments, but not in
-small/medium-scale ones. Their presence jeopardizes systems reliability and
-availability at scale. 
+Scalability bugs are latent bugs that are scale-dependent; they only surface in
+large-scale deployments, but not in small/medium-scale ones. Their presence
+jeopardizes systems reliability and availability at scale. 
 
 To address this problem, I started a pilot work on scalability checking. I
 introduced \sck, a methodology that enables developers to scale-check
@@ -287,10 +285,10 @@ submission to HotOS '17.
 
 I envision the future of cloud-scale distributed systems to be ``non-stop''. I
 am improving dependability of systems by addressing well-known unsolved problem
-of DC bugs via model checker, and tackling a new class of scalability bugs that
-the systems community rarely pay attention to. A journey toward the goal is a
-long road, but I believe my research advances systems community toward this
-direction. 
+of DC bugs via model checker, and tackling a new dimension of dependability in
+scalability bugs that the systems community rarely pay attention to. A journey
+toward the goal is a long road, but I believe my research advances systems
+community toward this direction. 
 
 \input{bib}
 
