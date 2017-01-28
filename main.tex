@@ -87,7 +87,7 @@ Harmful?  An Empirical Study on Non-commutative Aggregators in MapReduce
 Programs. ICSE '14}. To fill the void, I as one of the project leaders, have
 created the largest and most comprehensive taxonomy of 104 real-world DC bugs
 (named \taxdc) from Cassandra, HBase, Hadoop MapReduce, and ZooKeeper
-\cite{Gunawi+16-TaxDc-Appear}. \taxdc\ contains in-depth characteristics of DC
+\cite{Leesatapornwongsa+16-TaxDC}. \taxdc\ contains in-depth characteristics of DC
 bugs, stored in the form of 2,083 classification labels and 4,528 steps to
 re-enumerate the bugs that I manually added. It was publicly released as the
 first large-scale DC bugs benchmark.
@@ -200,7 +200,7 @@ bugs, this work will be the first case for implementation-level dmck.
 
 \subsubsection*{Automatic Workload Generator}
 
-From my study, I found that more than 60\% of DC bugs require more than one
+From TaxDC, I found that more than 60\% of DC bugs require more than one
 request workload, 35\% require multiple faults, and 29\% of DC bugs arise
 within buggy interactions between foreground and background protocols. This
 again highlights the complexity of complete systems. If we do not include the
@@ -260,9 +260,9 @@ more complex scenarios.
 
 Other than DC bugs, I joined a project performing the largest bugs study in six
 important Apache cloud infrastructures including Cassandra, Flume, Hadoop
-MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in total
-21,399 submitted issues within 2011-2014 in Apache bug repositories. We perform
-a deep analysis of 3,655 ``vital'' issues (\ie, real issues affecting
+MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in
+total 21,399 submitted issues within 2011-2014 in Apache bug repositories. We
+perform a deep analysis of 3,655 ``vital'' issues (\ie, real issues affecting
 deployments) with a set of detailed classifications. This study show new types
 of bugs that are \textit{specific} to cloud-scale distributed systems only.
 Motivated by these new bug types, I started a pilot work in area of
@@ -274,12 +274,12 @@ Scalability bugs are latent bugs that are scale-dependent; they only surface in
 large-scale deployments, but not in small/medium-scale ones. Their presence
 jeopardizes systems reliability and availability at scale. 
 
-To address this problem, I started a pilot work on scalability checking. I
-introduced \sck, a methodology that enables developers to scale-check
-distributed systems and find scalability bugs on \textit{one machine}. With
-\sck, I can reproduce 6 scalability bugs in Cassandra, Riak, and Voldemort.
-These bugs manifest in large scale only (\eg 200-500 machines).  The work is in
-submission to HotOS '17.
+To address this problem, I started a pilot work on scalability checking
+\cite{Gunawi+17-ScaleCheck-Insub}. I introduced \sck, a methodology that
+enables developers to scale-check distributed systems and find scalability bugs
+on \textit{one machine}. With \sck, I can reproduce 6 scalability bugs in
+Cassandra, Riak, and Voldemort.  These bugs manifest in large scale only (\eg
+200-500 machines). 
 
 \section{Summary}
 
