@@ -258,15 +258,15 @@ more complex scenarios.
 
 \section{Other Works}
 
-Other than DC bugs, I joined a project performing the largest bugs study in six
-important Apache cloud infrastructures including Cassandra, Flume, Hadoop
-MapReduce, HBase, HDFS, and ZooKeeper \cite{Gunawi+14-Cbs}. We reviewed in
-total 21,399 submitted issues within 2011-2014 in Apache bug repositories. We
-perform a deep analysis of 3,655 ``vital'' issues (\ie, real issues affecting
-deployments) with a set of detailed classifications. This study show new types
-of bugs that are \textit{specific} to cloud-scale distributed systems only.
-Motivated by these new bug types, I started a pilot work in area of
-``\textit{\textbf{scalability bugs}}''.
+Other than DC bugs, I joined a project performing the largest bugs study to find
+``\textit{what bugs live in the cloud?}''. We studied six popular Apache cloud
+infrastructures including Cassandra, Flume, Hadoop MapReduce, HBase, HDFS, and
+ZooKeeper \cite{Gunawi+14-Cbs}.  We reviewed in total 21,399 submitted issues
+within 2011-2014, and perform a deep analysis of 3,655 ``vital'' issues (\ie,
+real issues affecting deployments) with a set of detailed classifications. This
+study show new dimensions of bugs that are \textit{specific} to cloud-scale
+distributed systems only. Motivated by these novel dimensions, I started and
+joined other projects to tackle the bugs in the clud, which I explain below.
 
 \subsection{Scalability Bugs}
 
@@ -278,7 +278,7 @@ To address this problem, I started a pilot work on scalability checking
 \cite{Gunawi+17-ScaleCheck-Insub}. I introduced \sck, a methodology that
 enables developers to scale-check distributed systems and find scalability bugs
 on \textit{one machine}. With \sck, I can reproduce 6 scalability bugs in
-Cassandra, Riak, and Voldemort.  These bugs manifest in large scale only (\eg
+Cassandra, Riak, and Voldemort.  These bugs manifest in large scale only (\eg\
 200-500 machines). 
 
 \section{Summary}
