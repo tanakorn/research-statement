@@ -208,54 +208,6 @@ complex preconditions, the bugs will not surface in checking process. To
 address this complexity, I will adopt static and dynamic analysis to generate
 the necessary input preconditions to cover more complex test scenarios.
 
-\if 0
-I will construct \deepcheck, a dmck with a backward
-static analysis tool that is capable of searching the necessary input
-preconditions to cover unreachable paths. The concept of \deepcheck\ is the dmck
-will run with a limited input precondition. Then, \deepcheck\ will analyze which
-code path is not reachable given the limited input. It will perform a backward
-analysis to search for input preconditions to the path. As a result, this
-backward analysis will provide the sequence of input preconditions that cover
-more complex scenarios.
-\fi
-
-\if 0
-\subsubsection*{Automated Semantic-Aware Model Checking (Ongoing Work)} 
-
-So far, as I leverage domain-specific semantic information into reduction
-strategies, we (or the developers) must manually extract and incorporate the
-semantic knowledge and write the corresponding reduction policies. This manual
-process, based on high-level human understanding of the codebase, can
-potentially miss important patterns due to human errors and breaks soundness.
-
-To address the unsoundness of SAMC and the developers' burden in manually
-writing semantic-based reduction strategies, I am creating \autocheck, a dmck
-that automatically and soundly extracts complete semantic knowledge into
-reduction strategies with the help of program analysis. To do so, I combine
-symbolic execution and dmck. While others have used symbolic execution with
-model checking for LC bugs, \autocheck\ will be the first case for
-implementation-level dmck. 
-
-\subsubsection*{Deep Semantic-Aware Model Checking (Future Work)}
-
-Execution paths to DC bugs often require complex input preconditions such as
-multiple faults, reboots, and protocol initiations. I found that more than 60\%
-of DC bugs require more than one protocol initiation, 35\% require multiple
-faults, and 29\% of DC bugs arise within buggy interactions between foreground
-and background protocols.  This again highlights the complexity of complete
-systems. If we do not include the complex preconditions, the bugs will not
-surface in checking process.
-
-To address this complexity, I will construct \deepcheck, a dmck with a backward
-static analysis tool that is capable of searching the necessary input
-preconditions to cover unreachable paths. The concept of \deepcheck\ is the dmck
-will run with a limited input precondition. Then, \deepcheck\ will analyze which
-code path is not reachable given the limited input. It will perform a backward
-analysis to search for input preconditions to the path. As a result, this
-backward analysis will provide the sequence of input preconditions that cover
-more complex scenarios.
-\fi
-
 \section{Other Works}
 
 Other than DC bugs, I joined a project performing the largest bugs study to find
@@ -291,8 +243,20 @@ systems with limpware injections \cite{Do+13-Limplock}. The result exposes the
 inability of today's cloud systems in dealing with limpware. We found that a
 single limpware can cripple other healthy nodes, or even worse, a whole cluster.
 Motivated from this observation, we introduced a robust Path-Based Speculative
-Execution (PBSE) for data-parallel frameworks, that detects limping NICs and
-avoids them \cite{Suminto+17-PBSE-InSub}.
+Execution (\textbf{PBSE}) for data-parallel frameworks, that detects limping
+NICs and avoids them \cite{Suminto+17-PBSE-InSub}.
+
+\subsection{Drill-Ready Cloud} 
+
+Faults in real deployments are very complex, because the real environments could
+be arbitrarily unpredictable (multi datacenters, layers of virtualization,
+intensive users' requests, \etc), but in offline testings, the topologies are
+much simpler, and the scale of the workloads and injected failures are often
+orders of magnitude smaller. Thus I envision the future of cloud testing to be
+\textit{online testing}, and introduced ``\textbf{failure drill}'', the concepts
+of how online testing for cloud systems should be operated
+\cite{Leesatapornwongsa+14-Drill-fixed}.  The failure drill addresses how online test
+can be safe, efficient, usable, and general.
 
 \section{Summary}
 
