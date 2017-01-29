@@ -259,27 +259,40 @@ more complex scenarios.
 \section{Other Works}
 
 Other than DC bugs, I joined a project performing the largest bugs study to find
-``\textit{what bugs live in the cloud?}''. We studied six popular Apache cloud
-infrastructures including Cassandra, Flume, Hadoop MapReduce, HBase, HDFS, and
-ZooKeeper \cite{Gunawi+14-Cbs}.  We reviewed in total 21,399 submitted issues
-within 2011-2014, and perform a deep analysis of 3,655 ``vital'' issues (\ie,
-real issues affecting deployments) with a set of detailed classifications. This
-study show new dimensions of bugs that are \textit{specific} to cloud-scale
-distributed systems only. Motivated by these novel dimensions, I started and
-joined other projects to tackle the bugs in the clud, which I explain below.
+``\textit{what bugs live in the cloud?}'' \cite{Gunawi+14-Cbs}. We studied six
+popular Apache cloud infrastructures (\eg\ Cassandra, Hadoop MapReduce, and
+HBase). We reviewed in total 21,399 submitted issues within 2011-2014, and
+perform a deep analysis of 3,655 ``\textit{vital}'' issues. This study show new
+dimensions of bugs that are \textit{specific} to cloud systems only. Motivated
+by these novel dimensions, I have been working in many projects to tackle the
+bugs in the clud, which I explain below.
 
 \subsection{Scalability Bugs}
 
 Scalability bugs are latent bugs that are scale-dependent; they only surface in
 large-scale deployments, but not in small/medium-scale ones. Their presence
 jeopardizes systems reliability and availability at scale. 
-
+%
 To address this problem, I started a pilot work on scalability checking
-\cite{Gunawi+17-ScaleCheck-Insub}. I introduced \sck, a methodology that
-enables developers to scale-check distributed systems and find scalability bugs
-on \textit{one machine}. With \sck, I can reproduce 6 scalability bugs in
-Cassandra, Riak, and Voldemort.  These bugs manifest in large scale only (\eg\
-200-500 machines). 
+\cite{Gunawi+17-ScaleCheck-Insub}. I introduced \sck, a methodology that enables
+developers to check and debug scalability bugs on \textit{one machine}. With
+\sck, I can reproduce 6 scalability bugs in Cassandra, Riak, and Voldemort.
+These bugs manifest in large scale only (\eg\ 200-500 machines). 
+
+\subsection{Limpware Tolerant Computing}
+
+It is widely known that hardware can fail in different ways such as corruption,
+fail stop and fail partial, but there is one often-overlooked cause of
+performance instability: ``\textbf{\textit{limpware}}'', \textit{limping}
+hardware whose performance degrades significantly compared to its specification.
+There was no works comprehensively studied the impact of this overlooked
+limpware failure, so my colleagues and I benchmarked eight popular Apache cloud
+systems with limpware injections \cite{Do+13-Limplock}. The result exposes the
+inability of today's cloud systems in dealing with limpware. We found that a
+single limpware can cripple other healthy nodes, or even worse, a whole cluster.
+Motivated from this observation, we introduced a robust Path-Based Speculative
+Execution (PBSE) for data-parallel frameworks, that detects limping NICs and
+avoids them \cite{Suminto+17-PBSE-InSub}.
 
 \section{Summary}
 
