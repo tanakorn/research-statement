@@ -234,7 +234,7 @@ large-scale deployments, but not in small/medium-scale ones. Their presence
 jeopardizes systems reliability and availability at scale. 
 %
 To address this problem, I started a pilot work on scalability checking
-\cite{Gunawi+17-ScaleCheck-Insub}. I introduced \sck, a methodology that enables
+\cite{Gunawi+17-SCk-Insub,Leesatapornwongsa+17-SCk-InPrep}. I introduced \sck, a methodology that enables
 developers to check and debug scalability bugs on \textit{one machine}. With
 \sck, I can reproduce 6 scalability bugs in Cassandra, Riak, and Voldemort.
 These bugs manifest in large scale only (\eg\ 200-500 machines). 
@@ -252,7 +252,7 @@ systems in dealing with limpware. A single limpware can cripple other healthy
 nodes, or even worse, a whole cluster.  Motivated from this observation, we
 introduced a robust Path-Based Speculative Execution (\textbf{PBSE}), that
 helps data-parallel frameworks recover from limping network interface cards (NICs)
-\cite{Suminto+17-PBSE-InSub}.
+\cite{Suminto+17-PBSE-InPrep}.
 
 \subsection{Drill-Ready Cloud} 
 
