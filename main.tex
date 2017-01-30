@@ -217,61 +217,88 @@ complex test scenarios necessary to unearth hidden DC bugs.
 
 \section{Other Works}
 
-Other than DC bugs, I have also involved in other problems. I
-joined a project performing the largest bugs study to find ``\textit{what bugs
-live in the cloud?}'' \cite{Gunawi+14-Cbs}.  We studied six popular Apache
-cloud infrastructures. We
-reviewed in total 21,399 submitted issues within 2011-2014, and perform a deep
-analysis of 3,655 ``\textit{vital}'' issues. This study show novel dimensions
-of bugs that are \textit{specific} to cloud systems only. Motivated by the
-discovery, I have been working in many projects to tackle the bugs in the
-cloud, which I explain below.
+Other than DC bugs, I also address other dimensions of cloud dependability that
+traditional dependability techniques are not enough to solve. I briefly explain
+the other projects here.
 
-\subsection{Scalability Bugs}
+%
+%I joined a project
+%performing the largest bugs study to find ``\textit{what bugs live in the
+%cloud?}'' \cite{Gunawi+14-Cbs}.  We studied six popular Apache cloud
+%infrastructures. We reviewed in total 21,399 submitted issues within 2011-2014,
+%and perform a deep analysis of 3,655 ``\textit{vital}'' issues. This study show
+%novel dimensions of bugs that are \textit{specific} to cloud systems only.
+%Motivated by the discovery, I have been working in many projects to tackle the
+%bugs in the cloud, which I explain below.
 
-Scalability bugs are latent bugs that are scale-dependent; they only surface in
-large-scale deployments, but not in small/medium-scale ones. Their presence
-jeopardizes systems reliability and availability at scale. 
+%\subsection*{Scalability Bugs}
+
+\noindent
+\textbf{Scalability Bug Checking}: Scalability bugs are latent bugs that are
+scale-dependent; they only surface in large-scale deployments, but not in
+small/medium-scale ones. Their presence jeopardizes systems reliability and
+availability at scale. 
 %
 To address this problem, I started a pilot work on scalability checking
-\cite{Gunawi+17-SCk-Insub,Leesatapornwongsa+17-SCk-InPrep}. I introduced \sck, a methodology that enables
-developers to check and debug scalability bugs on \textit{one machine}. With
-\sck, I can reproduce 6 scalability bugs in Cassandra, Riak, and Voldemort.
-These bugs manifest in large scale only (\eg\ 200-500 machines). 
+\cite{Gunawi+17-SCk-Insub,Leesatapornwongsa+17-SCk-InPrep}. I introduced \sck,
+a methodology that enables developers to check and debug scalability bugs on
+\textit{one machine}. With \sck, I can reproduce 6 scalability bugs in
+Cassandra, Riak, and Voldemort.  These bugs manifest in large scale only (\eg\
+200-500 machines). 
 
-\subsection{Limpware Tolerant Computing}
+%\subsection*{Cloud Bug Study}
 
-Hardware can fail in different ways such as corruption, fail stop, and fail
-partial, but there is one often-overlooked cause of performance instability:
-``\textbf{\textit{limpware}}'', \textit{limping} hardware whose performance
-degrades significantly compared to its specification.  There was no works
-studied the impact of this overlooked limpware failure, so my colleagues and I
-benchmarked eight popular Apache cloud systems with limpware injections
-\cite{Do+13-Limplock}. The result exposes the inability of today's cloud
-systems in dealing with limpware. A single limpware can cripple other healthy
-nodes, or even worse, a whole cluster.  Motivated from this observation, we
-introduced a robust Path-Based Speculative Execution (\textbf{PBSE}), that
-helps data-parallel frameworks recover from limping network interface cards (NICs)
-\cite{Suminto+17-PBSE-InPrep}.
+\noindent
+\textbf{Cloud Bug Study}: To build ground knowledge of holistic cloud
+dependability, my colleagues and I performed the largest study on bugs in
+cloud-scale distirbuted systems \cite{Gunawi+14-Cbs}. We studied six popular
+Apache cloud infrastructures by reviewing in total 21,399 submitted issues
+within 2011-2014, and performing a deep analysis of 3,655 ``\textit{vital}''
+issues. The study shows ``\textit{what bugs live in the cloud?}'' and indicates
+novel dimensions of bugs that are \textit{unique} to cloud systems. We also
+released our cloud bug database to the public.
 
-\subsection{Drill-Ready Cloud} 
+%Motivated by the discovery, I have been working in many
+%projects to tackle the bugs in the cloud, which I explain below.
 
-Faults in real deployments are very complex. The real environments are
-unforeseen (multi datacenters, layers of virtualization, massive
-workloads, \etc), but in offline testings, the environments are much simpler, and
-the scale of the workloads and injected faults are often orders of magnitude
-smaller. To reach ideal dependability, I envision the future of cloud systems requiring
-\textit{online testing}, and introduced ``\textbf{failure drill}'', the concepts of
-how online testing for cloud should be operated
-\cite{Leesatapornwongsa+14-Drill-fixed}.  The failure drill addresses how online
-test can be safe, efficient, usable, and general.
+%\subsection*{Limpware Tolerant Computing}
+
+\noindent
+\textbf{Limpware Tolerant Computing}: Hardware can fail in different ways such as
+corruption, fail stop, and fail partial, but there is one often-overlooked
+cause of performance instability: ``\textbf{\textit{limpware}}'',
+\textit{limping} hardware whose performance degrades significantly compared to
+its specification.  There was no works studied the impact of this overlooked
+limpware failure, so my colleagues and I benchmarked eight popular Apache cloud
+systems with limpware injections \cite{Do+13-Limplock}. The result exposes the
+inability of today's cloud systems in dealing with limpware. A single limpware
+can cripple other healthy nodes, or even worse, a whole cluster.  Motivated
+from this observation, we introduced a robust Path-Based Speculative Execution
+(\textbf{PBSE}), that helps data-parallel frameworks recover from limping
+network interface cards (NICs) \cite{Suminto+17-PBSE-InPrep}.
+
+%\subsection*{Drill-Ready Cloud} 
+
+\noindent
+\textbf{Drill-Ready Cloud}: Faults in real deployments are very complex. The
+real environments are unforeseen (multi datacenters, layers of virtualization,
+massive workloads, \etc), but in offline testings, the environments are much
+simpler, and the scale of the workloads and injected faults are often orders of
+magnitude smaller. To reach ideal dependability, I envision the future of cloud
+systems requiring \textit{online testing}, and introduced ``\textbf{failure
+drill}'', the concepts of how online testing for cloud should be operated
+\cite{Leesatapornwongsa+14-Drill-fixed}.  The failure drill addresses how
+online test can be safe, efficient, usable, and general.
 
 \section{Summary}
 
-I envision the future of cloud-scale distributed systems to be ``non-stop''. I
-am improving dependability of systems by addressing well-known unsolved problem
-of DC bugs via model checker, and tackling new dimensions of cloud dependability 
-that the systems community has not paid attention. A journey
+I envision the future of cloud services to be ``uninterrupted''. Cloud services
+must be accessible anytime and anywhere, with fast and stable performance, and
+not lose or corrupt users' data.
+%
+I am improving dependability of systems by addressing well-known unsolved
+problem of DC bugs via model checker, and tackling new dimensions of cloud
+dependability that the systems community has not paid attention. A journey
 toward the goal is a long road, but I believe my research advances systems
 community toward the direction. 
 
