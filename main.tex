@@ -44,7 +44,7 @@ nondeterministic orders of distributed events such as message arrivals, and
 hardware crashes and reboots. Cloud systems execute multiple complicated
 distributed protocols concurrently (\eg, serving requests, operating
 background tasks, and combined with untimely hardware failures). The possible
-interleavings of the distributed events are beyond developers' expectations and
+interleavings of the distributed events are beyond developers' anticipation and
 some interleavings might not be handled properly. The buggy distributed
 interleavings can cause catastrophic failures such as data loss, and downtimes.
 
@@ -65,7 +65,7 @@ of cloud dependability in section 2.
 
 \subsection{DC Bug Study \& Taxonomy} 
 
-Bug studies can significantly guide many aspects of dependability
+Bug and failure studies can significantly guide many aspects of dependability
 research, and introduce new research problems. Many dependability researchers
 have recently employed formal studies on bugs and failures such as the studies
 on large-scale system bugs/failures from Microsoft \footnote{Zhenyu Guo, Sean
@@ -139,7 +139,7 @@ processed by the target system and incorporates that to create reduction
 policies. The policies are based on sound reduction techniques such as DPOR and
 symmetry. The policies tell SAMC not to re-order some pairs of events such as
 message-message pairs, and message-crash pairs, yet preserves soundness, because
-those cut out re-orderings are redundant. 
+those cut out re-orderings are redundant, and unnecessary to check.
 
 I built SAMC from scratch, I was able to reproduce 12 old bugs
 in 3 cloud systems involving 30-120 distributed events and multiple crashes and
@@ -148,7 +148,7 @@ after two days. SAMC can find the bugs up to 271x (33x on average) faster
 compared to state-of-the-art techniques. Additionally, I found two new bugs in
 Hadoop MapReduce and ZooKeeper. Although, SAMC was built for checking
 distributed systems, the principles of \textbf{semantic awareness} I
-introduced is also applicable to multithreading software model cheker as well.
+introduced is also applicable to multithreading software model chekers as well.
 
 \subsubsection*{Full Semantic-Aware Model Checking (Ongoing Work)} 
 
@@ -182,7 +182,7 @@ building of \fullcheck.
 
 \fullcheck\ will make bug checking practical, but it still requires manual
 efforts from developers. My future work will automate the manual processes
-to reduce the burdensome, as I explain next.
+to reduce the developers' burdensome, as I explain next.
 
 \subsubsection*{Automated Semantic Extractor}
 
@@ -207,24 +207,25 @@ bugs, this work will be the first case for implementation-level dmck.
 
 \subsubsection*{Automatic Workload Generator}
 
-TaxDC shows 60\% of DC bugs require more than one request workload,
-35\% require multiple faults, and 29\% arise because
-interactions between foreground and background operations. This again highlights
-the complexity of complete systems. If we do not include the complex
-preconditions, the bugs will not surface in checking process. To address this
-complexity, I will adopt static and dynamic analysis to generate the necessary
-input preconditions to cover more complex test scenarios.
+TaxDC shows 80\% of DC bugs require more than one protocol, 35\% require
+multiple faults, and 29\% arise because interactions between foreground and
+background protocols. This again highlights the complexity of complete
+systems. If we do not include the complex preconditions, the bugs will not
+surface in a checking process. To address this complexity, I will adopt static
+and dynamic analysis to generate the necessary input preconditions to cover
+complex test scenarios necessary to unearth hidden DC bugs.
 
 \section{Other Works}
 
-Other than DC bugs, I joined a project performing the largest bugs study to find
-``\textit{what bugs live in the cloud?}'' \cite{Gunawi+14-Cbs}. We studied six
-popular Apache cloud infrastructures (\eg\ Cassandra, Hadoop MapReduce, and
-HBase). We reviewed in total 21,399 submitted issues within 2011-2014, and
-perform a deep analysis of 3,655 ``\textit{vital}'' issues. This study show novel
-dimensions of bugs that are \textit{specific} to cloud systems only. Motivated
-by the discovery, I have been working in many projects to tackle the
-bugs in the cloud, which I explain below.
+Other than DC bugs, I have also involved in other problems. I
+joined a project performing the largest bugs study to find ``\textit{what bugs
+live in the cloud?}'' \cite{Gunawi+14-Cbs}.  We studied six popular Apache
+cloud infrastructures. We
+reviewed in total 21,399 submitted issues within 2011-2014, and perform a deep
+analysis of 3,655 ``\textit{vital}'' issues. This study show novel dimensions
+of bugs that are \textit{specific} to cloud systems only. Motivated by the
+discovery, I have been working in many projects to tackle the bugs in the
+cloud, which I explain below.
 
 \subsection{Scalability Bugs}
 
@@ -249,18 +250,18 @@ benchmarked eight popular Apache cloud systems with limpware injections
 \cite{Do+13-Limplock}. The result exposes the inability of today's cloud
 systems in dealing with limpware. A single limpware can cripple other healthy
 nodes, or even worse, a whole cluster.  Motivated from this observation, we
-introduced a robust Path-Based Speculative Execution (\textbf{PBSE}) for
-data-parallel frameworks, that can recover from limping NICs
+introduced a robust Path-Based Speculative Execution (\textbf{PBSE}), that
+helps data-parallel frameworks recover from limping network interface cards (NICs)
 \cite{Suminto+17-PBSE-InSub}.
 
 \subsection{Drill-Ready Cloud} 
 
-Faults in real deployments are very complex. The real environments could be
+Faults in real deployments are very complex. The real environments are
 unforeseen (multi datacenters, layers of virtualization, massive
 workloads, \etc), but in offline testings, the environments are much simpler, and
 the scale of the workloads and injected faults are often orders of magnitude
-smaller. To reach ideal dependability, I envision the future of cloud testing to
-be \textit{online}, and introduced ``\textbf{failure drill}'', the concepts of
+smaller. To reach ideal dependability, I envision the future of cloud systems requiring
+\textit{online testing}, and introduced ``\textbf{failure drill}'', the concepts of
 how online testing for cloud should be operated
 \cite{Leesatapornwongsa+14-Drill-fixed}.  The failure drill addresses how online
 test can be safe, efficient, usable, and general.
