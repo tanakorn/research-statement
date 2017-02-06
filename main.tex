@@ -45,13 +45,13 @@ prone to failures.
 
 The main focus of my dependability research is on the problem of
 \textbf{\textit{distributed concurrency bugs (DC bugs)}}. DC bugs are caused by
-nondeterministic orders of distributed events such as message arrivals, hardware
-crashes, and reboots. Cloud systems execute multiple complicated distributed
-protocols concurrently (\eg, serving users' requests, operating background
-tasks, and combined with untimely hardware failures), and possible interleavings
-of the distributed events are beyond developers' anticipation, which some
-interleavings might not be handled properly, and can cause catastrophic failures
-such as data loss and downtimes.
+nondeterministic orders of distributed events such as message arrivals,
+hardware crashes/reboots, and network partitions. Cloud systems execute
+multiple complicated distributed protocols concurrently (\eg, serving users'
+requests, operating background tasks, and combined with untimely hardware
+failures), and possible interleavings of the distributed events are beyond
+developers' anticipation, which some interleavings might not be handled
+properly, and can cause catastrophic failures such as data loss and downtimes.
 
 Below I describe how I address the important and challenging problem of DC bugs,
 specifically by (1) \textit{performing} an in-depth study of more than 100
@@ -75,21 +75,22 @@ Hucheng Zhou, Haoxiang Lin, Tian Xiao, Haibo Lin, Wei Lin, and Tao Xie. A
 Characteristic Study On Failures of Production Distributed Data-Parallel
 Programs. ICSE '13}
 %
-However, I am not aware of any large-scale DC-bug study, a recent study from
-Microsoft only studied five DC bugs in MapReduce.\footnote{Tian Xiao, Jiaxing
-Zhang, Hucheng Zhou, Zhenyu Guo, Sean McDirmid, Wei Lin, Wenguang Chen, and
-Lidong Zhou.  Nondeterminism in MapReduce Considered Harmful? An Empirical
-Study on Non-commutative Aggregators in MapReduce Programs. ICSE '14}
-
-To fill the void, I as one of the project leaders, created the first largest
-taxonomy of 104 real-world DC bugs (named \taxdc)
-\cite{Leesatapornwongsa+16-TaxDC} from four popular large-scale distributed
-systems: Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper. 
-\taxdc\ contains in-depth characteristics of DC bugs, stored in the form of 2083
-classification labels and 4528 lines of re-enumerated steps to the bugs that we
-manually added. We show that although DC bugs are complex, but they can be
-abstracted and categorized with our taxonomy that covers all aspects of DC bugs
-such as bug triggering, errors and failures, and bug fixing.
+For example, in SETSUDO project\footnote{Pallavi Joshi, Malay Ganai, Gogul
+Balakrishnan, Aarti Gupta, and Nadia Papakonstantinou. SETSUDO:
+Perturbation-based Testing Framework for Scalable Distributed Systems. TRIOS
+'13}, researchers from NEC Labs dissected network-partition DC bugs to study,
+but did not cover other types of DC bugs and not publicly release it.
+%
+In addition, I am not aware of any public complete DC-bug study, thus to fill
+the void, I as one of the project leaders, created the first largest taxonomy
+of 104 real-world DC bugs (named \taxdc) \cite{Leesatapornwongsa+16-TaxDC} from
+four popular large-scale distributed systems: Cassandra, HBase, Hadoop
+MapReduce/Yarn, and ZooKeeper.  \taxdc\ contains in-depth characteristics of DC
+bugs, stored in the form of 2083 classification labels and 4528 lines of
+re-enumerated steps to the bugs that we manually added. We show that although
+DC bugs are complex, but they can be abstracted and categorized with our
+taxonomy that covers all aspects of DC bugs such as bug triggering, errors and
+failures, and bug fixing.
 
 %\taxdc\ is the most comprehensive taxonomy that covers all aspects of DC bugs
 %such as bug triggering, errors and failures, and bug fixing.
@@ -135,7 +136,7 @@ industries, and I believe \taxdc\ will help shape the future research on DC bugs
 One powerful method for discovering hidden DC bugs is the use of an
 \textit{implementation-level distributed system model checker} (\textbf{dmck}).
 A dmck can discover buggy interleavings that lead to DC bugs by reordering
-every possibility of nondeterministic distributed events. The last nine years
+every possibility of nondeterministic distributed events. The last ten years
 have seen a rise of dmcks such as 
 %
 MaceMC\footnote{Charles Killian, James Anderson, Ranjit Jhala,
@@ -175,16 +176,18 @@ symmetry. The policies tell SAMC not to re-order some pairs of events such as
 message-message pairs, and message-crash pairs, yet preserves soundness, because
 those cut out re-orderings are redundant, and unnecessary to check.
 
-I built SAMC from scratch with 10 KLOC, and I was able to reproduce 12 old bugs
-in 3 cloud systems (Cassandra, Hadoop MapReduce, and ZooKeeper) involving 30-120
-distributed events and multiple crashes and reboots. Some of these bugs cannot
-be unearthed by non-SAMC approaches, even after two days. SAMC can find the bugs
-up to 271x (33x on average) faster compared to state-of-the-art techniques, it
-found two new bugs in Hadoop MapReduce and ZooKeeper, and it was requested from
-research groups and companies for testing their work. In addition, although SAMC
-was built for distributed systems, the principles of \textbf{semantic awareness}
-I introduced are also applicable to multithreading software model chekers as
-well.
+I built SAMC from scratch with 10 KLOC, and integrated it to Hadoop MapReduce
+and ZooKeeper. I was able to reproduce 10 old bugs; and later a researcher from
+NEC Labs integrated SAMC to Cassandra and could reproduce two old bugs.
+%
+These twelve bugs involve 30-120 distributed events and multiple crashes and
+reboots. Some of these bugs cannot be unearthed by non-SAMC approaches, even
+after two days. SAMC can find the bugs up to 271x (33x on average) faster
+compared to state-of-the-art techniques, it found two new bugs in Hadoop
+MapReduce and ZooKeeper, and it was requested from research groups and companies
+for testing their work. In addition, although SAMC was built for distributed
+systems, the principles of \textbf{semantic awareness} I introduced are also
+applicable to multithreading software model chekers as well.
 
 \subsubsection*{Full Semantic-Aware Model Checking (Ongoing Work)} 
 
@@ -205,12 +208,12 @@ events.
 
 To address the incompleteness of SAMC, I am building \fullcheck, a dmck that
 intercepts all types of necessary events to unearth real-world DC bugs, but will
-do so in a fast and scalable manner. Demeter, the latest state of the art for
-exercising message-computation race, still hits a scalability wall, and the
-authors hint that using semantic knowledge is an important future direction. I
-will build more powerful semantic-awareness principles while adopting new
-reduction techniques in the building of \fullcheck. \fullcheck\ will be the
-first dmck that controls all distributed events necessary to catch DC bugs.
+do so in a fast and scalable manner. Dependability researchers (\eg\ Demeter,
+and SETSUDO) hint that black-box testing is not efficient for DC-bug testing,
+and using semantic knowledge is an important future direction. I will build more
+powerful semantic-awareness principles while adopting new reduction techniques
+in the building of \fullcheck. \fullcheck\ will be the first dmck that controls
+all distributed events necessary to catch DC bugs.
 
 %There are many works from Microsoft on
 %model checking for multithreading software to tackle state-space
