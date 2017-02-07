@@ -34,32 +34,32 @@ Chicago}}
 \maketitle
 
 My research focuses on improving the dependability of cloud-scale distributed
-systems such as scale-out storage systems and distributed computing frameworks.
+systems such as scale-out storages and data-parallel computing frameworks.
 These distributed systems are back ends of many cloud services, which the
 services are expected to be 24/7 dependable. Unfulfilled dependability is
 costly, which cloud service companies collectively lose billions of dollars in
-revenue each year from service downtimes, yet there are many challenges to reach
-an ideal dependability. It is challenging, because the cloud back ends are
-complex, they are written in millions of lines of code that are brittle and
+revenue each year from service downtimes, yet there are many challenges to
+reach an ideal dependability. It is challenging, because the cloud back ends
+are complex, they are written in millions of lines of code that are brittle and
 prone to failures.
 
 The main focus of my dependability research is on the problem of
 \textbf{\textit{distributed concurrency bugs (DC bugs)}}. DC bugs are caused by
 nondeterministic orders of distributed events such as message arrivals,
-hardware crashes/reboots, and network partitions. Cloud systems execute
+hardware crashes/reboots, and network timeout. Cloud systems execute
 multiple complicated distributed protocols concurrently (\eg, serving users'
 requests, operating background tasks, and combined with untimely hardware
 failures), and possible interleavings of the distributed events are beyond
 developers' anticipation, which some interleavings might not be handled
 properly, and can cause catastrophic failures such as data loss and downtimes.
 
-Below I describe how I address the important and challenging problem of DC bugs,
-specifically by (1) \textit{performing} an in-depth study of more than 100
-real-world DC bugs and (2) \textit{advancing} the state of the art of model
-checking for distributed systems. I also will describe my works on other aspects
-of cloud dependability.
+Below I describe how I address the important and challenging problem of DC
+bugs, specifically by (1) \textit{performing} an in-depth study of more than
+100 real-world DC bugs and (2) \textit{advancing} the state of the art of model
+checking for distributed systems. I also will describe my other work on
+different aspects of cloud dependability rather than DC bugs.
 
-\section{Distributed Concurrency (DC) Bugs}\label{dcbugs}
+\section{Distributed Concurrency Bugs (DC Bugs)}\label{dcbugs}
 
 %To combat DC bugs, I establish my research in (1) \textbf{\textit{formal bug
 %studies}} and (2) \textbf{\textit{distributed system model checking}}. 
@@ -78,19 +78,19 @@ Programs. ICSE '13}
 For example, in SETSUDO project\footnote{Pallavi Joshi, Malay Ganai, Gogul
 Balakrishnan, Aarti Gupta, and Nadia Papakonstantinou. SETSUDO:
 Perturbation-based Testing Framework for Scalable Distributed Systems. TRIOS
-'13}, researchers from NEC Labs dissected network-partition DC bugs to study,
-but did not cover other types of DC bugs and not publicly release it.
-%
-In addition, I am not aware of any public complete DC-bug study, thus to fill
-the void, I as one of the project leaders, created the first largest taxonomy
-of 104 real-world DC bugs (named \taxdc) \cite{Leesatapornwongsa+16-TaxDC} from
-four popular large-scale distributed systems: Cassandra, HBase, Hadoop
-MapReduce/Yarn, and ZooKeeper.  \taxdc\ contains in-depth characteristics of DC
-bugs, stored in the form of 2083 classification labels and 4528 lines of
-re-enumerated steps to the bugs that we manually added. We show that although
-DC bugs are complex, but they can be abstracted and categorized with our
-taxonomy that covers all aspects of DC bugs such as bug triggering, errors and
-failures, and bug fixing.
+'13}, researchers from NEC Labs dissected network-failure-related DC bugs to
+study, but they did not cover other types of DC bugs and not publicly release it.
+Additionally, I am not aware of any complete DC-bug studies published. 
+
+To fill the void, I as one of the project leaders, created the first largest
+taxonomy of 104 real-world DC bugs (named \taxdc)
+\cite{Leesatapornwongsa+16-TaxDC} from four popular large-scale distributed
+systems: Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper.  \taxdc\
+contains in-depth characteristics of DC bugs, stored in the form of 2083
+classification labels and 4528 lines of re-enumerated steps to the bugs that we
+manually added. We show that although DC bugs are complex, but they can be
+abstracted and categorized with our taxonomy that covers all aspects of DC bugs
+such as bug triggering, errors and failures, and bug fixing.
 
 %\taxdc\ is the most comprehensive taxonomy that covers all aspects of DC bugs
 %such as bug triggering, errors and failures, and bug fixing.
@@ -326,8 +326,9 @@ methodology that enables developers to emulate systems at scale to check and
 debug scalability bugs of control protocols, which are CPU-intensive computing,
 on \textit{one machine}. 
 %
-With \sck, I can reproduce six scalability bugs in Cassandra, Riak, and
-Voldemort, which manifest in large scale only (\eg\ 200-500 machines). 
+With \sck\ and just only one machine, I can reproduce six scalability bugs in
+Cassandra, Riak, and Voldemort, which manifest in large scale only (\eg\
+200-500 machines). 
 
 %\subsection*{Cloud Bug Study}
 
@@ -367,15 +368,17 @@ network interface cards \cite{Suminto+17-PBSE-InPrep}.
 %\subsection*{Drill-Ready Cloud} 
 
 \noindent
-\textbf{Drill-Ready Cloud}: Faults in real deployments are very complex, and the
-real environments are arbitrarily complex (multi datacenters, layers of
+\textbf{Drill-Ready Cloud}: Faults in real deployments are very complex, and
+the real deployment environments are arbitrary (multi datacenters, layers of
 virtualization, massive workloads, \etc), but in offline testings, the
 environments are much simpler, and the scale of the workloads and injected
-faults are often orders of magnitude smaller. To reach ideal dependability, I
-envision the future of cloud systems require \textit{online testing}, and
-introduced ``\textbf{failure drill}'', the concepts of how online testing for
-cloud should be operated \cite{Leesatapornwongsa+14-Drill-fixed}. The failure
-drill addresses how online test can be safe, efficient, usable, and general.
+faults are often orders of magnitude smaller. This makes offline testings cannot
+catch complex bugs and cannot provide ideal dependability.  To reach ideal
+dependability, I envision the future of cloud systems require \textit{online
+testing}, and introduced ``\textbf{failure drill}'', the concepts of how online
+testing for cloud should be operated \cite{Leesatapornwongsa+14-Drill-fixed}.
+The failure drill addresses how online test can be safe, efficient, usable, and
+general.
 
 \section{Summary}
 
@@ -385,8 +388,8 @@ not lose or corrupt users' data.
 %
 I am improving dependability of systems by addressing well-known unsolved
 problem of DC bugs via model checker, and tackling new dimensions of cloud
-dependability that the systems community has not paid attention. A journey
-toward the goal is a long road, but I believe my research advances systems
+dependability that the system community has not paid attention. A journey
+toward the goal is a long road, but I believe my research advances system
 community toward the direction. 
 
 \input{bib}
