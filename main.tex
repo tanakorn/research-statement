@@ -26,7 +26,7 @@
 
 \begin{document}
 
-\title{Research Statement}
+\title{\textbf{Research Statement}}
 \author{Tanakorn Leesatapornwongsa}
 \date{\vspace{-1ex} \small{Department of Computer Science, University of
 Chicago}}
@@ -86,10 +86,10 @@ Non-commutative Aggregators in MapReduce Programs. ICSE '14}
 To fill the void, I as one of the project leaders, created the first largest
 taxonomy of 104 real-world DC bugs (named \taxdc)
 \cite{Leesatapornwongsa+16-TaxDC} from four popular large-scale distributed
-systems: Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper. 
-\taxdc\ contains in-depth characteristics of DC bugs, stored in the form of 2083
-classification labels and 4528 lines of re-enumerated steps to the bugs that we
-manually added. We show that although DC bugs are complex, but they can be
+systems: Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper.  \taxdc\
+contains in-depth characteristics of DC bugs, stored in the form of 2,083
+classification labels and 4,528 lines of re-enumerated steps to the bugs that
+we manually added. We show that although DC bugs are complex, but they can be
 abstracted and categorized with our taxonomy that covers all aspects of DC bugs
 such as bug triggering, errors and failures, and bug fixing.
 
@@ -120,12 +120,20 @@ What errors/effects are caused by DC bugs?
 How do developers fix DC bugs? 
 %
 By able to answer these questions, we made \textit{six} major findings that can
-spur exciting research topics on DC bugs, for example, model checking, bug
-detection, failure diagnosis, and failure prevention and fixing.
+spur exciting research topics on DC bug combating, for example, 
+%
+how to build fast model checker that controls timings of all distributed events, 
+%
+how state-of-the-art bug detection techniques applicable to DC bugs, 
+%
+how distributed systems facilitate failure diagnosis, 
+%
+and how DC-bug-induced failure can be prevented at runtime.
 %
 We release \taxdc\ as a large-scale DC-bug benchmark, and so far it has been
-downloaded from more than \textit{twenty} research groups including academia and
-industries, and I believe \taxdc\ will help shape the future research on DC bugs.
+downloaded from more than \textit{twenty} research groups including academia
+and industry, and I believe \taxdc\ will help shape the future research on DC
+bugs.
 
 %In addition to the taxonomy, we made six major findings that can 
 
@@ -137,7 +145,7 @@ industries, and I believe \taxdc\ will help shape the future research on DC bugs
 One powerful method for discovering hidden DC bugs is the use of an
 \textit{implementation-level distributed system model checker} (\textbf{dmck}).
 A dmck can discover buggy interleavings that lead to DC bugs by reordering
-every possibility of nondeterministic distributed events. The last nine years
+every possibility of nondeterministic distributed events. The last ten years
 have seen a rise of dmcks such as 
 %
 MaceMC\footnote{Charles Killian, James Anderson, Ranjit Jhala,
@@ -178,14 +186,15 @@ message-message pairs, and message-crash pairs, yet preserves soundness, because
 those cut out re-orderings are redundant, and unnecessary to check.
 
 I built SAMC from scratch with 10 KLOC, and I was able to reproduce 12 old bugs
-in 3 cloud systems (Cassandra, Hadoop MapReduce, and ZooKeeper) involving 30-120
-distributed events and multiple crashes and reboots. Some of these bugs cannot
-be unearthed by non-SAMC approaches, even after two days. SAMC can find the bugs
-up to 271x (33x on average) faster compared to state-of-the-art techniques, it
-found two new bugs in Hadoop MapReduce and ZooKeeper, and it was requested from
-research groups and companies for testing their work. In addition, although SAMC
-was built for distributed systems, the principles of \textbf{semantic awareness}
-I introduced are also applicable to multithreading software model chekers as
+in 3 cloud systems (Cassandra, Hadoop MapReduce, and ZooKeeper) involving
+30-120 distributed events and multiple crashes and reboots. Some of these bugs
+cannot be unearthed by non-SAMC approaches, even after two days. SAMC can find
+the bugs up to 271x (33x on average) faster compared to state-of-the-art
+techniques, it found two new bugs in Hadoop MapReduce and ZooKeeper, and some
+research groups and companies show an interest in adopting SAMC to test their
+in-development systems. In addition, although SAMC was introduced under
+distributed system context, the principles of \textbf{semantic awareness} I
+introduced are also applicable to multithreading software model chekers as
 well.
 
 \subsubsection*{Full Semantic-Aware Model Checking (Ongoing Work)} 
@@ -271,10 +280,10 @@ processes to reduce the developers' burdensome, as I explain next.
 So far, developers manually extract and incorporate the semantic knowledge to
 SAMC. This process could introduce human errors and breaks soundness. Thus I
 plan to advance SAMC to automatically extracts complete semantic knowledge into
-reduction strategies with the help of program analysis. To do so, I adopt
-symbolic execution to create the semantic-aware reduction policies. While others
-have used symbolic execution with model checking for multithreading bugs, this
-work will be the first case for dmck. 
+reduction strategies with the help of program analysis. To do so, I will adopt
+symbolic execution to automate the semantic-aware reduction policy creation.
+While others have used symbolic execution with model checking for
+multithreading bugs, this work will be the first case for dmck. 
 
 \subsubsection*{Automatic Input Generator}
 
@@ -322,7 +331,7 @@ them.
 To address this problem, I started a pilot work on scalability checking
 \cite{Gunawi+17-SCk-Insub,Leesatapornwongsa+17-SCk-InPrep}. I introduced \sck, a
 methodology that enables developers to emulate systems at scale to check and
-debug scalability bugs of control protocols, which are CPU-intensive computing,
+debug scalability bugs in control protocols, which are CPU-intensive computing,
 on \textit{one machine}. 
 %
 With \sck, I can reproduce six scalability bugs in Cassandra, Riak, and
@@ -366,15 +375,16 @@ network interface cards \cite{Suminto+17-PBSE-InPrep}.
 %\subsection*{Drill-Ready Cloud} 
 
 \noindent
-\textbf{Drill-Ready Cloud}: Faults in real deployments are very complex, and the
-real environments are arbitrarily complex (multi datacenters, layers of
+\textbf{Drill-Ready Cloud}: Faults in real deployments are very complex, and
+the real environments are arbitrary (multi datacenters, layers of
 virtualization, massive workloads, \etc), but in offline testings, the
 environments are much simpler, and the scale of the workloads and injected
-faults are often orders of magnitude smaller. To reach ideal dependability, I
-envision the future of cloud systems require \textit{online testing}, and
-introduced ``\textbf{failure drill}'', the concepts of how online testing for
-cloud should be operated \cite{Leesatapornwongsa+14-Drill-fixed}. The failure
-drill addresses how online test can be safe, efficient, usable, and general.
+faults are often orders of magnitude smaller. From this fact, I believe a
+missing piece toward ideal dependability is \textit{online testing}, which we
+inject faults to production to test systems in real deployment, so I introduced
+``\textbf{failure drill}'', the concepts of how online testing for cloud should
+be operated \cite{Leesatapornwongsa+14-Drill-fixed}. The failure drill
+addresses how online test can be safe, efficient, usable, and general.
 
 \section{Summary}
 
