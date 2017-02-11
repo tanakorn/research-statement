@@ -69,17 +69,14 @@ of cloud dependability.
 Bug and failure studies can significantly guide many aspects of dependability
 research. Many researchers have recently employed formal studies on bugs and
 failures such as the studies on large-scale system bugs/failures from
-Microsoft.\footnote{Zhenyu Guo, Sean McDirmid, Mao Yang, Li Zhuang, Pu Zhang,
-Yingwei Luo, Tom Bergan, Madan Musuvathi, Zheng Zhang, and Lidong Zhou. Failure
-Recovery: When the Cure Is Worse Than the Disease. HotOS '13}\footnote{Sihan Li,
-Hucheng Zhou, Haoxiang Lin, Tian Xiao, Haibo Lin, Wei Lin, and Tao Xie. A
-Characteristic Study On Failures of Production Distributed Data-Parallel
+Microsoft.\footnote{Guo et al. Failure
+Recovery: When the Cure Is Worse Than the Disease. HotOS '13}\footnote{Li et al.
+A Characteristic Study On Failures of Production Distributed Data-Parallel
 Programs. ICSE '13}
 %
 However, I am not aware of any large-scale DC-bug study, a recent study from
 Microsoft analyzed the effect of distributed concurrency of workload and only
-studied five DC bugs in MapReduce.\footnote{Tian Xiao, Jiaxing Zhang, Hucheng
-Zhou, Zhenyu Guo, Sean McDirmid, Wei Lin, Wenguang Chen, and Lidong Zhou.
+studied five DC bugs in MapReduce.\footnote{Xiao et al.
 Nondeterminism in MapReduce Considered Harmful? An Empirical Study on
 Non-commutative Aggregators in MapReduce Programs. ICSE '14}
 
@@ -148,15 +145,14 @@ A dmck can discover buggy interleavings that lead to DC bugs by reordering
 every possibility of nondeterministic distributed events. The last ten years
 have seen a rise of dmcks such as 
 %
-MaceMC\footnote{Charles Killian, James Anderson, Ranjit Jhala,
-and Amin Vahdat. Life, Death, and the Critical Transition: Finding Liveness Bugs
+MaceMC\footnote{Killian et al.
+Life, Death, and the Critical Transition: Finding Liveness Bugs
 in Systems Code. NSDI '07}, 
 %
-\modist\footnote{Junfeng Yang, Tisheng Chen, Ming
-Wu, Zhilei Xu, Xuezheng Liu, Haoxiang Lin, Mao Yang, Fan Long, Lintao Zhang, and
-Lidong Zhou. MODIST: Transparent Model Checking of Unmodified Distributed
-Systems. NSDI '09}, or Demeter.\footnote{Huayang Guo, Ming Wu, Lidong Zhou, Gang
-Hu, Junfeng Yang, and Lintao Zhang. Practical Software Model Checking via
+\modist\footnote{Yang et al.
+MODIST: Transparent Model Checking of Unmodified Distributed
+Systems. NSDI '09}, or Demeter.\footnote{Guo et al.
+Practical Software Model Checking via
 Dynamic Interface Reduction. SOSP '11} One big challenge faced by a dmck is the
 state-space explosion problem (\ie, there are too many distributed events to
 re-order). To address this, existing dmcks adopt a random walk or basic
@@ -321,8 +317,7 @@ scale-dependent; they only surface in large-scale deployments, but not in
 small/medium-scale ones. Their presence jeopardizes systems reliability and
 availability at scale. 
 %
-While others have tackled scalability bugs in data-plane protocols\footnote{Yang
-Wang, Manos Kapritsos, Lara Schmidt, Lorenzo Alvisi, and Mike Dahlin.
+While others have tackled scalability bugs in data-plane protocols\footnote{Wang et al.
 Exalt: Empowering Researchers to Evaluate Large-Scale Storage Systems. NSDI
 '14}, I found that scalability bugs can manifest in control protocols as well.
 Control-protocol bugs are more disastrous, yet there is no work addresses about
