@@ -67,21 +67,26 @@ different aspects of cloud dependability rather than DC bugs.
 
 Bug and failure studies can significantly guide many aspects of dependability
 research. Many researchers have recently employed formal studies on bugs and
-failures.\footnote{Zhenyu Guo, Sean McDirmid, Mao Yang, Li Zhuang, Pu Zhang,
-Yingwei Luo, Tom Bergan, Madan Musuvathi, Zheng Zhang, and Lidong Zhou. Failure
-Recovery: When the Cure Is Worse Than the Disease. HotOS '13}\footnote{Sihan Li,
+failures. For example, a joint work between a VMWare engineer and academic
+institutes studied a number of bugs in open source projects and pointed out an
+urgency to address concurrency bugs in the Linux kernel.\footnote{Lin Tan, Chen
+Liu, Zhenmin Li, Xuanhui Wang, Yuanyuan Zhou, and Chengxiang Zhai. Bug
+characteristics in open source software. Empirical Software Engineering '14
+19(6)}
+%
+There are also some studies on bugs in distributed systems\footnote{Sihan Li,
 Hucheng Zhou, Haoxiang Lin, Tian Xiao, Haibo Lin, Wei Lin, and Tao Xie. A
 Characteristic Study On Failures of Production Distributed Data-Parallel
-Programs. ICSE '13}
-%
-However, I am not aware of any large-scale DC-bug studies published.  Thus, to
-fill the void, I as one of the project leaders, created the first largest
-taxonomy of 104 real-world DC bugs (named \taxdc)
+Programs. ICSE '13}, however, I am not aware of any large-scale DC-bug studies
+published. 
+
+To fill the void, I, as one of the project leaders, created the
+first largest taxonomy of 104 real-world DC bugs (named \taxdc)
 \cite{Leesatapornwongsa+16-TaxDC} from four popular large-scale distributed
 systems: Cassandra, HBase, Hadoop MapReduce/Yarn, and ZooKeeper.  \taxdc\
 contains in-depth characteristics of DC bugs, stored in the form of 2,083
-classification labels and 4,528 lines of re-enumerated steps to the bugs that we
-manually added. We show that although DC bugs are complex, but they can be
+classification labels and 4,528 lines of re-enumerated steps to the bugs that
+we manually added. We show that although DC bugs are complex, but they can be
 abstracted and categorized with our taxonomy that covers all aspects of DC bugs
 such as bug triggering, errors and failures, and bug fixing.
 
