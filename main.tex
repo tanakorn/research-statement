@@ -68,7 +68,7 @@ different aspects of cloud dependability rather than DC bugs.
 Bug and failure studies can significantly guide many aspects of dependability
 research. Many researchers have recently employed formal studies on bugs and
 failures. For example, a joint work between a VMWare engineer and academic
-institutes studied a number of bugs in open source projects and pointed out an
+institutes studied bugs reported in open source projects and could point out an
 urgency to address concurrency bugs in the Linux kernel.\footnote{Lin Tan, Chen
 Liu, Zhenmin Li, Xuanhui Wang, Yuanyuan Zhou, and Chengxiang Zhai. Bug
 characteristics in open source software. Empirical Software Engineering '14
@@ -125,7 +125,7 @@ runtime.
 %
 We release \taxdc\ as a large-scale DC-bug benchmark, and so far it has been
 downloaded from more than \textit{twenty} research groups including academia and
-industries, and I believe \taxdc\ will help shape the future research on DC bugs.
+industries. I believe \taxdc\ will help shape the future research on DC bugs.
 
 %In addition to the taxonomy, we made six major findings that can 
 
@@ -168,26 +168,29 @@ strategies, as such inclusion would exacerbate the state-space explosion
 problem.
 
 To address these limitations, I built Semantic-Aware Model Checking
-(\textbf{SAMC}) \cite{Leesatapornwongsa+15-SamcIssta,Leesatapornwongsa+14-Samc},
-a novel white-box model checking approach that takes \textit{semantic knowledge}
-of how distributed events (specifically, messages, crashes, and reboots) are
-processed by the target system and incorporates that to create reduction
-policies. The policies are based on sound reduction techniques such as DPOR and
-symmetry. The policies tell SAMC not to re-order some pairs of events such as
-message-message pairs, and message-crash pairs, yet preserves soundness, because
-those cut out re-orderings are redundant, and unnecessary to check.
+(\textbf{SAMC})
+\cite{Leesatapornwongsa+15-SamcIssta,Leesatapornwongsa+14-Samc}, a novel
+white-box model checking approach that takes \textit{semantic knowledge} of how
+distributed events (specifically, messages, crashes, and reboots) are processed
+by the target system. The knowledge is fed from system developers and is
+incorporated to create reduction policies.  The policies are based on sound
+reduction techniques such as DPOR and symmetry, and they will tell SAMC not to
+re-order some pairs of events such as message-message pairs, and message-crash
+pairs, yet preserves soundness, because those cut out re-orderings are
+redundant, and unnecessary to check.
 
 I built SAMC from scratch with 10 KLOC, and I was able to reproduce 12 old bugs
-in 3 cloud systems (Cassandra, Hadoop MapReduce, and ZooKeeper) involving 30-120
-distributed events and multiple crashes and reboots. Some of these bugs cannot
-be unearthed by non-SAMC approaches, even after two days. SAMC can find the bugs
-up to 271x (33x on average) faster compared to state-of-the-art techniques, it
-found two new bugs in Hadoop MapReduce and ZooKeeper, and it was requested from
-research groups and companies for testing their work. An engineer from VMWare
-has contacted my advisor and expressed his interest in SAMC for testing a
-product. In addition, although SAMC was built for distributed systems, the
-principles of \textbf{semantic awareness} I introduced are also applicable to
-multithreading software model chekers as well.
+in 3 cloud systems (Cassandra, Hadoop MapReduce, and ZooKeeper) involving
+30-120 distributed events and multiple crashes and reboots. Some of these bugs
+cannot be unearthed by non-SAMC approaches, even after two days. SAMC can find
+the bugs up to 271x (33x on average) faster compared to state-of-the-art
+techniques, it found two new bugs in Hadoop MapReduce and ZooKeeper, and there
+were research groups and companies requested to adopt SAMC to test their
+ongoing projects. An engineer from VMWare has contacted my advisor and
+expressed his interest in SAMC for testing a product. In addition, although
+SAMC was built for distributed systems, the principles of \textbf{semantic
+awareness} I introduced are also applicable to multithreading software model
+chekers as well.
 
 \subsubsection*{Full Semantic-Aware Model Checking (Ongoing Work)} 
 
@@ -199,18 +202,18 @@ SAMC do not intercept local computation and do not exercise timeouts; \modist\
 and Demeter do not inject multiple crash and reboot timings; and none of the
 above include other faults such as untimely disk faults.
 %
-Second, controlling all necessary events is technically doable, but will ``blow
-up'' the state space. Thus more innovations are needed to devise fast
-exploration strategies that leverage semantic relationships among all necessary
-events.
+Second, controlling all necessary events is technically doable, but will
+``\textit{blow up}'' the state space. Thus more innovations are needed to
+devise fast exploration strategies that leverage semantic relationships among
+all necessary events.
 
 %that leverage semantic relationships among all necessary events.
 
 To address the incompleteness of SAMC, I am building \fullcheck, a dmck that
-intercepts all types of necessary events to unearth real-world DC bugs, but will
-do so in a fast and scalable manner. Some dependability researchers hint that
-black-box testing is not efficient for DC-bug testing, and using semantic
-knowledge is an important future direction. I will build more powerful
+intercepts all types of necessary events to unearth real-world DC bugs, but
+will do so in a fast and scalable manner. Some dependability researchers
+believe that black-box testing is not efficient for DC-bug testing, and using
+semantic knowledge is an important future direction. I will build more powerful
 semantic-awareness principles while adopting new reduction techniques in the
 building of \fullcheck. \fullcheck\ will be the first dmck that controls all
 distributed events necessary to catch DC bugs.
@@ -265,7 +268,7 @@ distributed events necessary to catch DC bugs.
 
 \fullcheck\ will help developers unearth hidden DC bugs in a fast manner, but it
 still requires manual efforts from developers to extract semantic knowledge and
-feed it to SAMC.
+feed to SAMC.
 %
 My future work will automate this semantic extracting process to reduce the
 developers' burdensome, and I also plan to automate other manual efforts required
@@ -325,10 +328,10 @@ Control-protocol bugs are more disastrous, yet there is no work addresses about
 them.
  
 To address this problem, I started a pilot work on scalability checking
-\cite{Gunawi+17-SCk-Insub,Leesatapornwongsa+17-SCk-InPrep}. I introduced \sck, a
-methodology that enables developers to emulate systems at scale to check and
-debug scalability bugs of control protocols, which are CPU-intensive computing,
-on \textit{one machine}. 
+\cite{Gunawi+17-SCk-Insub,Leesatapornwongsa+17-SCk-InPrep}. I introduced \sck,
+a methodology that enables developers to emulate systems at scale to check and
+debug control protocols, which are CPU-intensive computing, on \textit{one
+machine}. 
 %
 With \sck\ and just only one machine, I can reproduce six scalability bugs in
 Cassandra, Riak, and Voldemort, which manifest in large scale only (\eg\
@@ -376,13 +379,13 @@ network interface cards \cite{Suminto+17-PBSE-InPrep}.
 the real deployment environments are arbitrary (multi datacenters, layers of
 virtualization, massive workloads, \etc), but in offline testings, the
 environments are much simpler, and the scale of the workloads and injected
-faults are often orders of magnitude smaller. This makes offline testings cannot
-catch complex bugs and cannot provide ideal dependability.  To reach ideal
-dependability, I envision the future of cloud systems require \textit{online
-testing}, and introduced ``\textbf{failure drill}'', the concepts of how online
-testing for cloud should be operated \cite{Leesatapornwongsa+14-Drill-fixed}.
-The failure drill addresses how online test can be safe, efficient, usable, and
-general.
+faults are often orders of magnitude smaller. This makes offline testings
+cannot catch complex bugs and cannot provide ideal dependability.  To reach
+ideal dependability, I envision the future of cloud systems requires
+\textit{online testing}, and introduced ``\textbf{failure
+drill}'' \cite{Leesatapornwongsa+14-Drill-fixed}, the concepts of how online
+testing for cloud should be operated.  The failure drill addresses how online
+test can be safe, efficient, usable, and general.
 
 \section{Summary}
 
